@@ -6,66 +6,60 @@
 <title>Nova Labs Code</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
-body {
-    margin: 0;
-    padding: 40px;
-    background: #111;
-    color: white;
-    font-family: Arial, sans-serif;
+body{
+    margin:0;
+    padding:40px;
+    background:#111;
+    color:white;
+    font-family:Arial,sans-serif;
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 40px;
+h1{
+    text-align:center;
+    margin-bottom:40px;
 }
 
-.section {
-    margin-bottom: 40px;
+.section{
+    margin-bottom:40px;
 }
 
-.section-title {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    font-weight: bold;
+.section-title{
+    font-size:1.5rem;
+    font-weight:bold;
+    margin-bottom:15px;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 15px;
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:15px;
 }
 
-.card {
-    display: block;
-    background: #1b1b1b;
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 20px;
-    text-decoration: none;
-    color: white;
-    transition: .2s;
+.card{
+    display:block;
+    background:#1b1b1b;
+    border:1px solid #333;
+    border-radius:12px;
+    padding:20px;
+    color:white;
+    text-decoration:none;
+    transition:.2s;
 }
 
-.card:hover {
-    transform: translateY(-4px);
-    border-color: #666;
-    background: #222;
+.card:hover{
+    transform:translateY(-4px);
+    background:#222;
+    border-color:#666;
 }
 
-.card-title {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.card-path {
-    color: #888;
-    font-size: 0.85rem;
-    word-break: break-all;
+.card-title{
+    font-size:1.1rem;
+    font-weight:bold;
+    text-align:center;
 }
 </style>
 </head>
@@ -76,63 +70,66 @@ h1 {
 <div id="content"></div>
 
 <script>
-// Add your links here
+
+// LINKS NOW USE NAME VALUES
 const links = [
-    "MusicPlayer/"
+    { name: "Music Player", url: "MusicPlayer/" }
 ];
 
 const groups = {};
 
 links.forEach(link => {
-    const url = new URL(link);
 
-    const parts = url.pathname
-        .split("/")
-        .filter(Boolean);
+    const isExternal = /^https?:\/\//i.test(link.url);
 
-    const group = parts[0] || "Home";
+    let group;
+
+    if (isExternal) {
+        group = "External";
+    } else {
+        const parts = link.url.split("/").filter(Boolean);
+        group = parts[0] || "Home";
+    }
 
     if (!groups[group]) {
         groups[group] = [];
     }
 
     groups[group].push({
-        url: link,
-        name:
-            parts.length === 0
-                ? "Home"
-                : parts[parts.length - 1]
-                      .replace(/-/g, " ")
-                      .replace(/\b\w/g, c => c.toUpperCase()),
-        path: url.pathname
+        ...link,
+        external: isExternal
     });
 });
 
-const container = document.getElementById("content");
+const content = document.getElementById("content");
 
 Object.keys(groups)
     .sort()
     .forEach(group => {
+
         const section = document.createElement("div");
         section.className = "section";
 
         const title = document.createElement("div");
         title.className = "section-title";
-        title.textContent =
-            group.replace(/-/g, " ")
-                 .replace(/\b\w/g, c => c.toUpperCase());
+        title.textContent = group;
 
         const grid = document.createElement("div");
         grid.className = "grid";
 
         groups[group].forEach(item => {
+
             const card = document.createElement("a");
             card.className = "card";
             card.href = item.url;
 
+            if (item.external) {
+                card.target = "_blank";
+                card.rel = "noopener noreferrer";
+            }
+
             card.innerHTML = `
                 <div class="card-title">${item.name}</div>
-                <div class="card-path">${item.path}</div>
             `;
 
             grid.appendChild(card);
@@ -140,8 +137,9 @@ Object.keys(groups)
 
         section.appendChild(title);
         section.appendChild(grid);
-        container.appendChild(section);
+        content.appendChild(section);
     });
+
 </script>
 
 </body>
