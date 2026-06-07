@@ -3,93 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Labs Index</title>
+<title>Nova Labs</title>
 
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: white;
-    padding: 20px;
+body{
+    background:#111;
+    color:white;
+    font-family:Arial,sans-serif;
+    padding:40px;
 }
 
-ul {
-    list-style: none;
-    padding-left: 20px;
+.tree{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:40px;
 }
 
-li {
-    margin: 6px 0;
+.card{
+    background:#1e1e1e;
+    border:1px solid #444;
+    border-radius:12px;
+    padding:12px 20px;
+    min-width:150px;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,.3);
 }
 
-a {
-    color: #4da6ff;
-    text-decoration: none;
+.children{
+    display:flex;
+    gap:30px;
+    justify-content:center;
+    flex-wrap:wrap;
 }
 
-a:hover {
-    text-decoration: underline;
+.branch{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    position:relative;
 }
 
-.folder::before {
-    content: "📁 ";
-}
-
-.file::before {
-    content: "📄 ";
+.branch::before{
+    content:"";
+    width:2px;
+    height:20px;
+    background:#666;
 }
 </style>
 </head>
 <body>
 
-<h1>Nova Labs</h1>
-
-<div id="tree"></div>
+<div class="tree" id="tree"></div>
 
 <script>
-const links = {
-    "Games": {
-        "Random Escape": "random-escape/",
-        "Chapter 1": "chapter1/",
-        "Chapter 2": "chapter2/"
-    },
-    "Tools": {
-        "Party Generator": "party-generator/",
-        "Admin Panel": "admin/"
-    },
-    "Documentation": {
-        "API Docs": "docs/api/",
-        "Guides": "docs/guides/"
-    }
+// Paste links here
+const links = [
+    "https://nova-labs-code.github.io/random-escape/",
+    "https://nova-labs-code.github.io/random-escape/chapter1/",
+    "https://nova-labs-code.github.io/random-escape/chapter2/",
+    "https://nova-labs-code.github.io/tools/admin/",
+    "https://nova-labs-code.github.io/tools/party-generator/",
+    "https://nova-labs-code.github.io/docs/api/",
+    "https://nova-labs-code.github.io/docs/guides/"
+];
+
+const root = {
+    name: "Nova Labs",
+    children: {}
 };
 
-function createTree(obj) {
-    const ul = document.createElement("ul");
+for (const link of links) {
+    const parts = new URL(link).pathname
+        .split("/")
+        .filter(Boolean);
 
-    for (const key in obj) {
-        const li = document.createElement("li");
+    let current = root.children;
 
-        if (typeof obj[key] === "string") {
-            li.className = "file";
-
-            const a = document.createElement("a");
-            a.href = obj[key];
-            a.textContent = key;
-
-            li.appendChild(a);
-        } else {
-            li.className = "folder";
-            li.textContent = key;
-            li.appendChild(createTree(obj[key]));
+    for (const part of parts) {
+        if (!current[part]) {
+            current[part] = {
+                name: part,
+                children: {}
+            };
         }
 
-        ul.appendChild(li);
+        current = current[part].children;
     }
-
-    return ul;
 }
 
-document.getElementById("tree").appendChild(createTree(links));
+function createNode(node) {
+    const branch = document.createElement("div");
+    branch.className = "branch";
+
+    const card = document.createElement("div");
+    card.className = "card";
+    card.textContent = node.name;
+
+    branch.appendChild(card);
+
+    const childKeys = Object.keys(node.children);
+
+    if (childKeys.length) {
+        const children = document.createElement("div");
+        children.className = "children";
+
+        childKeys.forEach(key => {
+            children.appendChild(createNode(node.children[key]));
+        });
+
+        branch.appendChild(children);
+    }
+
+    return branch;
+}
+
+document.getElementById("tree")
+    .appendChild(createNode(root));
 </script>
 
 </body>
