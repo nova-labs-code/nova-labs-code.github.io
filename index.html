@@ -12,100 +12,67 @@
 
 body{
     margin:0;
-    padding:50px 30px;
+    padding:40px;
     font-family:Arial, sans-serif;
-    color:#fff;
-
-    /* dark lab gradient */
-    background: radial-gradient(circle at top, #1a1a1a, #0b0b0b 60%, #000);
-}
-
-h1{
-    text-align:center;
-    font-size:2.2rem;
-    letter-spacing:1px;
-    margin-bottom:50px;
+    background:#0f1115;
     color:#eaeaea;
 }
 
-/* SECTION CONTAINER */
-.section{
-    margin-bottom:45px;
+/* TITLE */
+h1{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:2rem;
+    font-weight:600;
 }
 
-/* TAB TITLE */
+/* SECTION */
+.section{
+    margin-bottom:35px;
+}
+
 .section-title{
-    font-size:1.3rem;
+    font-size:1.2rem;
     font-weight:600;
-    margin-bottom:18px;
-    padding-left:10px;
-    border-left:3px solid #4da3ff;
-    color:#d6e6ff;
+    margin-bottom:12px;
+    color:#cfd6e4;
+    padding-left:8px;
+    border-left:3px solid #4a90e2;
 }
 
 /* GRID */
 .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
-    gap:18px;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:12px;
 }
 
 /* CARD */
 .card{
     display:block;
-    padding:22px 18px;
-    border-radius:14px;
+    padding:18px;
+    border-radius:10px;
+    background:#171a21;
+    border:1px solid #2a2f3a;
 
     text-decoration:none;
-    color:#fff;
+    color:#eaeaea;
 
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(10px);
-
-    transition:0.25s ease;
-    position:relative;
-    overflow:hidden;
+    transition:0.15s ease;
 }
 
-/* soft glow line */
-.card::before{
-    content:"";
-    position:absolute;
-    top:-50%;
-    left:-50%;
-    width:200%;
-    height:200%;
-    background: radial-gradient(circle, rgba(77,163,255,0.15), transparent 60%);
-    transform:rotate(25deg);
-    opacity:0;
-    transition:0.3s ease;
-}
-
-/* hover lift */
 .card:hover{
-    transform:translateY(-6px) scale(1.02);
-    border-color:rgba(77,163,255,0.4);
-    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    background:#1d2230;
+    border-color:#3a4252;
+    transform:translateY(-2px);
 }
 
-/* glow activation */
-.card:hover::before{
-    opacity:1;
-}
-
-/* TITLE */
+/* TEXT */
 .card-title{
-    font-size:1.05rem;
-    font-weight:600;
     text-align:center;
-    letter-spacing:0.5px;
-}
-
-/* subtle grid breathing */
-.grid:hover .card:not(:hover){
-    opacity:0.75;
-    transform:scale(0.98);
+    font-size:1rem;
+    font-weight:500;
+    letter-spacing:0.2px;
 }
 
 </style>
@@ -119,9 +86,8 @@ h1{
 
 <script>
 
-// 👇 FULLY MANUAL GROUPS
 const groups = {
-    "My Sites": [
+    "Main Pages": [
         { name: "Music Player", url: "MusicPlayer/" }
     ]
 };
