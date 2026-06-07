@@ -3,123 +3,145 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Labs</title>
+<title>Nova Labs Code</title>
 
 <style>
-body{
-    background:#111;
-    color:white;
-    font-family:Arial,sans-serif;
-    padding:40px;
+* {
+    box-sizing: border-box;
 }
 
-.tree{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:40px;
+body {
+    margin: 0;
+    padding: 40px;
+    background: #111;
+    color: white;
+    font-family: Arial, sans-serif;
 }
 
-.card{
-    background:#1e1e1e;
-    border:1px solid #444;
-    border-radius:12px;
-    padding:12px 20px;
-    min-width:150px;
-    text-align:center;
-    box-shadow:0 4px 12px rgba(0,0,0,.3);
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
 }
 
-.children{
-    display:flex;
-    gap:30px;
-    justify-content:center;
-    flex-wrap:wrap;
+.section {
+    margin-bottom: 40px;
 }
 
-.branch{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    position:relative;
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: bold;
 }
 
-.branch::before{
-    content:"";
-    width:2px;
-    height:20px;
-    background:#666;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.card {
+    display: block;
+    background: #1b1b1b;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: white;
+    transition: .2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    border-color: #666;
+    background: #222;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.card-path {
+    color: #888;
+    font-size: 0.85rem;
+    word-break: break-all;
 }
 </style>
 </head>
 <body>
 
-<div class="tree" id="tree"></div>
+<h1>Nova Labs</h1>
+
+<div id="content"></div>
 
 <script>
-// Paste links here
+// Add your links here
 const links = [
-    "https://nova-labs-code.github.io/random-escape/",
-    "https://nova-labs-code.github.io/random-escape/chapter1/",
-    "https://nova-labs-code.github.io/random-escape/chapter2/",
-    "https://nova-labs-code.github.io/tools/admin/",
-    "https://nova-labs-code.github.io/tools/party-generator/",
-    "https://nova-labs-code.github.io/docs/api/",
-    "https://nova-labs-code.github.io/docs/guides/"
+    "MusicPlayer/"
 ];
 
-const root = {
-    name: "Nova Labs",
-    children: {}
-};
+const groups = {};
 
-for (const link of links) {
-    const parts = new URL(link).pathname
+links.forEach(link => {
+    const url = new URL(link);
+
+    const parts = url.pathname
         .split("/")
         .filter(Boolean);
 
-    let current = root.children;
+    const group = parts[0] || "Home";
 
-    for (const part of parts) {
-        if (!current[part]) {
-            current[part] = {
-                name: part,
-                children: {}
-            };
-        }
-
-        current = current[part].children;
+    if (!groups[group]) {
+        groups[group] = [];
     }
-}
 
-function createNode(node) {
-    const branch = document.createElement("div");
-    branch.className = "branch";
+    groups[group].push({
+        url: link,
+        name:
+            parts.length === 0
+                ? "Home"
+                : parts[parts.length - 1]
+                      .replace(/-/g, " ")
+                      .replace(/\b\w/g, c => c.toUpperCase()),
+        path: url.pathname
+    });
+});
 
-    const card = document.createElement("div");
-    card.className = "card";
-    card.textContent = node.name;
+const container = document.getElementById("content");
 
-    branch.appendChild(card);
+Object.keys(groups)
+    .sort()
+    .forEach(group => {
+        const section = document.createElement("div");
+        section.className = "section";
 
-    const childKeys = Object.keys(node.children);
+        const title = document.createElement("div");
+        title.className = "section-title";
+        title.textContent =
+            group.replace(/-/g, " ")
+                 .replace(/\b\w/g, c => c.toUpperCase());
 
-    if (childKeys.length) {
-        const children = document.createElement("div");
-        children.className = "children";
+        const grid = document.createElement("div");
+        grid.className = "grid";
 
-        childKeys.forEach(key => {
-            children.appendChild(createNode(node.children[key]));
+        groups[group].forEach(item => {
+            const card = document.createElement("a");
+            card.className = "card";
+            card.href = item.url;
+
+            card.innerHTML = `
+                <div class="card-title">${item.name}</div>
+                <div class="card-path">${item.path}</div>
+            `;
+
+            grid.appendChild(card);
         });
 
-        branch.appendChild(children);
-    }
-
-    return branch;
-}
-
-document.getElementById("tree")
-    .appendChild(createNode(root));
+        section.appendChild(title);
+        section.appendChild(grid);
+        container.appendChild(section);
+    });
 </script>
 
 </body>
