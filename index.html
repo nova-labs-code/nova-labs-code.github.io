@@ -1,10 +1,96 @@
-<html>
-  <style>
-    h1{
-      font-size: 60px;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Labs Index</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: white;
+    padding: 20px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+li {
+    margin: 6px 0;
+}
+
+a {
+    color: #4da6ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.folder::before {
+    content: "📁 ";
+}
+
+.file::before {
+    content: "📄 ";
+}
+</style>
+</head>
+<body>
+
+<h1>Nova Labs</h1>
+
+<div id="tree"></div>
+
+<script>
+const links = {
+    "Games": {
+        "Random Escape": "random-escape/",
+        "Chapter 1": "chapter1/",
+        "Chapter 2": "chapter2/"
+    },
+    "Tools": {
+        "Party Generator": "party-generator/",
+        "Admin Panel": "admin/"
+    },
+    "Documentation": {
+        "API Docs": "docs/api/",
+        "Guides": "docs/guides/"
     }
-  </style>
-  <h1>
-    Welcome to my site
-  </h1>
+};
+
+function createTree(obj) {
+    const ul = document.createElement("ul");
+
+    for (const key in obj) {
+        const li = document.createElement("li");
+
+        if (typeof obj[key] === "string") {
+            li.className = "file";
+
+            const a = document.createElement("a");
+            a.href = obj[key];
+            a.textContent = key;
+
+            li.appendChild(a);
+        } else {
+            li.className = "folder";
+            li.textContent = key;
+            li.appendChild(createTree(obj[key]));
+        }
+
+        ul.appendChild(li);
+    }
+
+    return ul;
+}
+
+document.getElementById("tree").appendChild(createTree(links));
+</script>
+
+</body>
 </html>
