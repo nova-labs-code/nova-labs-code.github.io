@@ -12,57 +12,105 @@
 
 body{
     margin:0;
-    padding:40px;
-    background:#111;
-    color:white;
-    font-family:Arial,sans-serif;
+    padding:50px 30px;
+    font-family:Arial, sans-serif;
+    color:#fff;
+
+    /* dark lab gradient */
+    background: radial-gradient(circle at top, #1a1a1a, #0b0b0b 60%, #000);
 }
 
 h1{
     text-align:center;
-    margin-bottom:40px;
+    font-size:2.2rem;
+    letter-spacing:1px;
+    margin-bottom:50px;
+    color:#eaeaea;
 }
 
+/* SECTION CONTAINER */
 .section{
-    margin-bottom:40px;
+    margin-bottom:45px;
 }
 
+/* TAB TITLE */
 .section-title{
-    font-size:1.5rem;
-    font-weight:bold;
-    margin-bottom:15px;
+    font-size:1.3rem;
+    font-weight:600;
+    margin-bottom:18px;
+    padding-left:10px;
+    border-left:3px solid #4da3ff;
+    color:#d6e6ff;
 }
 
+/* GRID */
 .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-    gap:15px;
+    grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+    gap:18px;
 }
 
+/* CARD */
 .card{
     display:block;
-    background:#1b1b1b;
-    border:1px solid #333;
-    border-radius:12px;
-    padding:20px;
-    color:white;
+    padding:22px 18px;
+    border-radius:14px;
+
     text-decoration:none;
-    transition:.2s;
+    color:#fff;
+
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+
+    transition:0.25s ease;
+    position:relative;
+    overflow:hidden;
 }
 
+/* soft glow line */
+.card::before{
+    content:"";
+    position:absolute;
+    top:-50%;
+    left:-50%;
+    width:200%;
+    height:200%;
+    background: radial-gradient(circle, rgba(77,163,255,0.15), transparent 60%);
+    transform:rotate(25deg);
+    opacity:0;
+    transition:0.3s ease;
+}
+
+/* hover lift */
 .card:hover{
-    transform:translateY(-4px);
-    background:#222;
-    border-color:#666;
+    transform:translateY(-6px) scale(1.02);
+    border-color:rgba(77,163,255,0.4);
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
 
-.card-title{
-    font-size:1.1rem;
-    font-weight:bold;
-    text-align:center;
+/* glow activation */
+.card:hover::before{
+    opacity:1;
 }
+
+/* TITLE */
+.card-title{
+    font-size:1.05rem;
+    font-weight:600;
+    text-align:center;
+    letter-spacing:0.5px;
+}
+
+/* subtle grid breathing */
+.grid:hover .card:not(:hover){
+    opacity:0.75;
+    transform:scale(0.98);
+}
+
 </style>
 </head>
+
 <body>
 
 <h1>Nova Labs Code</h1>
@@ -71,74 +119,49 @@ h1{
 
 <script>
 
-// LINKS NOW USE NAME VALUES
-const links = [
-    { name: "Music Player", url: "MusicPlayer/" }
-];
-
-const groups = {};
-
-links.forEach(link => {
-
-    const isExternal = /^https?:\/\//i.test(link.url);
-
-    let group;
-
-    if (isExternal) {
-        group = "External";
-    } else {
-        const parts = link.url.split("/").filter(Boolean);
-        group = parts[0] || "Home";
-    }
-
-    if (!groups[group]) {
-        groups[group] = [];
-    }
-
-    groups[group].push({
-        ...link,
-        external: isExternal
-    });
-});
+// 👇 FULLY MANUAL GROUPS
+const groups = {
+    "My Sites": [
+        { name: "Music Player", url: "MusicPlayer/" }
+    ]
+};
 
 const content = document.getElementById("content");
 
-Object.keys(groups)
-    .sort()
-    .forEach(group => {
+Object.keys(groups).forEach(group => {
 
-        const section = document.createElement("div");
-        section.className = "section";
+    const section = document.createElement("div");
+    section.className = "section";
 
-        const title = document.createElement("div");
-        title.className = "section-title";
-        title.textContent = group;
+    const title = document.createElement("div");
+    title.className = "section-title";
+    title.textContent = group;
 
-        const grid = document.createElement("div");
-        grid.className = "grid";
+    const grid = document.createElement("div");
+    grid.className = "grid";
 
-        groups[group].forEach(item => {
+    groups[group].forEach(item => {
 
-            const card = document.createElement("a");
-            card.className = "card";
-            card.href = item.url;
+        const card = document.createElement("a");
+        card.className = "card";
+        card.href = item.url;
 
-            if (item.external) {
-                card.target = "_blank";
-                card.rel = "noopener noreferrer";
-            }
+        if (/^https?:\/\//i.test(item.url)) {
+            card.target = "_blank";
+            card.rel = "noopener noreferrer";
+        }
 
-            card.innerHTML = `
-                <div class="card-title">${item.name}</div>
-            `;
+        card.innerHTML = `
+            <div class="card-title">${item.name}</div>
+        `;
 
-            grid.appendChild(card);
-        });
-
-        section.appendChild(title);
-        section.appendChild(grid);
-        content.appendChild(section);
+        grid.appendChild(card);
     });
+
+    section.appendChild(title);
+    section.appendChild(grid);
+    content.appendChild(section);
+});
 
 </script>
 
