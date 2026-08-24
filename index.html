@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Labs Code</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    padding:40px;
+    font-family:Arial, sans-serif;
+    background:#0f1115;
+    color:#eaeaea;
+}
+
+/* TITLE */
+h1{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:2rem;
+    font-weight:600;
+}
+
+/* SECTION */
+.section{
+    margin-bottom:35px;
+}
+
+.section-title{
+    font-size:1.2rem;
+    font-weight:600;
+    margin-bottom:12px;
+    color:#cfd6e4;
+    padding-left:8px;
+    border-left:3px solid #4a90e2;
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:12px;
+}
+
+/* CARD */
+.card{
+    display:block;
+    padding:18px;
+    border-radius:10px;
+    background:#171a21;
+    border:1px solid #2a2f3a;
+
+    text-decoration:none;
+    color:#eaeaea;
+
+    transition:0.15s ease;
+}
+
+.card:hover{
+    background:#1d2230;
+    border-color:#3a4252;
+    transform:translateY(-2px);
+}
+
+/* TEXT */
+.card-title{
+    text-align:center;
+    font-size:1rem;
+    font-weight:500;
+    letter-spacing:0.2px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Nova Labs Code</h1>
+
+<div id="content"></div>
+
+<script>
+
+const groups = {
+    "Media": [
+        { name: "Music Player", url: "MusicPlayer/" },
+        { name: "Christmas Countdown", url: "Christmas-countdown"},
+        { name: "K-Pop Demon Hunters", url: "k-pop-demon-hunters"},
+        { name: "DVD ScreenSaver", url: "DVD"},
+        { name: "Music Looper (Old)", url: "MusicLoop"},
+        { name: "DualTone", url: "DualTone"}
+    ],
+    "Games": [
+        { name: "Nova RNG (Broken)", url: "NovaRNG"},
+        { name: "Mind Breaker", url: "Mind-Breaker"}
+    ],
+     "Source Scripts": [
+        { name: "Samson Recipes (Source)", url: "https://github.com/nova-labs-code/samson-recipes"}
+    ],
+     "Utilities": [
+        { name: "Checklist", url: "checklist"},
+        { name: "Block Tools", url: "BlockTools"},
+        { name: "QR Code Generator", url: "QRcode"}
+    ],
+     "Courses": [
+        { name: "Kitchen Alchemy ", url: "KitchenAlchemy"},
+        { name: "20 Week Coding Course", url: "20-week-coding-course"},
+        { name: "KnowledgePath ", url: "KnowledgePath"}
+    ]
+};
+
+const content = document.getElementById("content");
+
+Object.keys(groups).forEach(group => {
+
+    const section = document.createElement("div");
+    section.className = "section";
+
+    const title = document.createElement("div");
+    title.className = "section-title";
+    title.textContent = group;
+
+    const grid = document.createElement("div");
+    grid.className = "grid";
+
+    groups[group].forEach(item => {
+
+        const card = document.createElement("a");
+        card.className = "card";
+        card.href = item.url;
+
+        if (/^https?:\/\//i.test(item.url)) {
+            card.target = "_blank";
+            card.rel = "noopener noreferrer";
+        }
+
+        card.innerHTML = `
+            <div class="card-title">${item.name}</div>
+        `;
+
+        grid.appendChild(card);
+    });
+
+    section.appendChild(title);
+    section.appendChild(grid);
+    content.appendChild(section);
+});
+
+</script>
+
+</body>
+</html>
