@@ -27,19 +27,11 @@
 
     "games": [
         {
-            "name": "Game Name",
-            "description": "A short description of your game goes here.",
-            "image": "images/game1.png",
+            "name": "Push Point",
+            "description": "Push blocks, solve each challenge, and reach the finish line to complete the round!",
+            "image": "https://tr.rbxcdn.com/180DAY-1c953da6abd1452346ab2740b63faa21/768/432/Image/Webp/noFilter",
             "platform": "Roblox",
-            "link": "YOUR_ROBLOX_GAME_URL"
-        },
-
-        {
-            "name": "Another Game",
-            "description": "Another short description goes here.",
-            "image": "images/game2.png",
-            "platform": "Roblox",
-            "link": "YOUR_ROBLOX_GAME_URL"
+            "link": ""link": "https://www.roblox.com/games/start?placeId=120917241610359""
         }
     ],
 
