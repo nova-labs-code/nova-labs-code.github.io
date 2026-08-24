@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nova Labs Code</title>
+
+    <meta
+        name="description"
+        content="Official website for Nova Labs Code. Explore our games, models, assets, and latest updates."
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #08090d;
+            color: #ffffff;
+
+            line-height: 1.5;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ==================================================
+           NAVIGATION
+        ================================================== */
+
+        nav {
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            background: rgba(8, 9, 13, 0.82);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border-bottom: 1px solid #1c1e27;
+
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 20px;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+
+            align-items: center;
+
+            gap: 26px;
+        }
+
+        .nav-links a {
+            color: #9da0ac;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition:
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+
+            transform: translateY(-1px);
+        }
+
+        /* ==================================================
+           HERO
+        ================================================== */
+
+        .hero {
+            min-height: 100vh;
+
+            position: relative;
+
+            display: flex;
+            align-items: center;
+
+            padding:
+                130px 8%
+                90px;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 75% 35%,
+                    rgba(120, 103, 255, 0.25),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 25% 80%,
+                    rgba(60, 45, 150, 0.12),
+                    transparent 35%
+                ),
+                #08090d;
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 500px;
+            height: 500px;
+
+            right: -200px;
+            top: 100px;
+
+            background: rgba(120, 103, 255, 0.08);
+
+            filter: blur(100px);
+
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 760px;
+        }
+
+        .eyebrow {
+            color: #8d7cff;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 18px;
+
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(
+                54px,
+                9vw,
+                110px
+            );
+
+            line-height: 0.9;
+
+            letter-spacing: -4px;
+
+            margin-bottom: 28px;
+        }
+
+        .hero p {
+            color: #a7aab6;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            max-width: 620px;
+
+            margin-bottom: 35px;
+        }
+
+        .buttons {
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 46px;
+
+            padding:
+                0 20px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .button.primary {
+            background: #7867ff;
+
+            color: #ffffff;
+        }
+
+        .button.primary:hover {
+            background: #8b7cff;
+
+            transform: translateY(-2px);
+        }
+
+        .button.secondary {
+            background: #11131a;
+
+            border: 1px solid #30323d;
+
+            color: #ffffff;
+        }
+
+        .button.secondary:hover {
+            background: #191b24;
+
+            border-color: #454856;
+
+            transform: translateY(-2px);
+        }
+
+        /* ==================================================
+           GENERAL SECTIONS
+        ================================================== */
+
+        section {
+            padding:
+                100px 8%;
+        }
+
+        .section-title {
+            font-size: 38px;
+
+            line-height: 1.1;
+
+            margin-bottom: 12px;
+
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            color: #898c98;
+
+            max-width: 650px;
+
+            margin-bottom: 40px;
+        }
+
+        /* ==================================================
+           GAMES
+        ================================================== */
+
+        .games {
+            background: #0b0c11;
+        }
+
+        .games-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(270px, 1fr)
+                );
+
+            gap: 20px;
+        }
+
+        .game-card {
+            overflow: hidden;
+
+            background: #101219;
+
+            border:
+                1px solid #20222c;
+
+            border-radius: 14px;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+
+            border-color: #3d4050;
+        }
+
+        .game-image {
+            height: 200px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #181a23,
+                    #101219
+                );
+
+            color: #555967;
+
+            font-size: 13px;
+
+            overflow: hidden;
+        }
+
+        .game-image img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+        .game-info {
+            padding: 23px;
+        }
+
+        .game-info h3 {
+            font-size: 21px;
+
+            margin-bottom: 8px;
+        }
+
+        .game-info p {
+            color: #8e919d;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin-bottom: 18px;
+        }
+
+        .platforms {
+            display: flex;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 20px;
+        }
+
+        .platform {
+            padding:
+                6px 10px;
+
+            background: #191b24;
+
+            border-radius: 6px;
+
+            color: #b0b3be;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+        /* ==================================================
+           MODELS
+        ================================================== */
+
+        .models {
+            background: #08090d;
+        }
+
+        .models-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(240px, 1fr)
+                );
+
+            gap: 20px;
+        }
+
+        .model-card {
+            overflow: hidden;
+
+            background: #101219;
+
+            border:
+                1px solid #20222c;
+
+            border-radius: 14px;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .model-card:hover {
+            transform: translateY(-5px);
+
+            border-color: #3d4050;
+        }
+
+        .model-preview {
+            height: 190px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #191b24,
+                    #11131a
+                );
+
+            color: #555967;
+
+            font-size: 13px;
+        }
+
+        .model-preview img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+        }
+
+        .model-info {
+            padding: 21px;
+        }
+
+        .model-info h3 {
+            font-size: 19px;
+
+            margin-bottom: 8px;
+        }
+
+        .model-info p {
+            color: #8e919d;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin-bottom: 16px;
+        }
+
+        .model-meta {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+        }
+
+        .model-type {
+            padding:
+                6px 10px;
+
+            background: #191b24;
+
+            border-radius: 6px;
+
+            color: #aeb1bc;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+        .free {
+            color: #63d99b;
+
+            font-size: 13px;
+
+            font-weight: 900;
+        }
+
+        /* ==================================================
+           STORE
+        ================================================== */
+
+        .store {
+            background: #0d0f15;
+        }
+
+        .free-notice {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                16px 18px;
+
+            margin-bottom: 30px;
+
+            max-width: 700px;
+
+            background: #111a16;
+
+            border:
+                1px solid #1f3d2f;
+
+            border-radius: 10px;
+
+            color: #a8cdb9;
+
+            font-size: 14px;
+        }
+
+        .store-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(230px, 1fr)
+                );
+
+            gap: 20px;
+        }
+
+        .store-item {
+            padding: 20px;
+
+            background: #11131a;
+
+            border:
+                1px solid #20222c;
+
+            border-radius: 12px;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .store-item:hover {
+            transform: translateY(-4px);
+
+            border-color: #3d4050;
+        }
+
+        .store-image {
+            height: 180px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 18px;
+
+            background: #191b24;
+
+            border-radius: 8px;
+
+            color: #555967;
+
+            font-size: 13px;
+        }
+
+        .store-item h3 {
+            margin-bottom: 8px;
+        }
+
+        .store-item p {
+            color: #8e919d;
+
+            font-size: 14px;
+
+            margin-bottom: 18px;
+        }
+
+        .store-status {
+            display: inline-block;
+
+            padding:
+                6px 10px;
+
+            background: #111a16;
+
+            border:
+                1px solid #1f3d2f;
+
+            color: #63d99b;
+
+            border-radius: 6px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            margin-bottom: 18px;
+        }
+
+        /* ==================================================
+           UPDATES
+        ================================================== */
+
+        .updates {
+            background: #08090d;
+        }
+
+        .update-box {
+            max-width: 850px;
+
+            padding: 30px;
+
+            background: #101219;
+
+            border:
+                1px solid #20222c;
+
+            border-radius: 14px;
+        }
+
+        .update-date {
+            color: #8d7cff;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 10px;
+        }
+
+        .update-box h3 {
+            font-size: 22px;
+
+            margin-bottom: 12px;
+        }
+
+        .update-box p {
+            color: #9295a1;
+
+            line-height: 1.7;
+        }
+
+        /* ==================================================
+           PLATFORMS
+        ================================================== */
+
+        .platform-section {
+            background: #0b0c11;
+        }
+
+        .platform-list {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+        }
+
+        .platform-large {
+            display: inline-flex;
+
+            align-items: center;
+
+            min-height: 55px;
+
+            padding:
+                0 24px;
+
+            background: #11131a;
+
+            border:
+                1px solid #20222c;
+
+            border-radius: 10px;
+
+            color: #c4c6cf;
+
+            font-weight: 800;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease;
+        }
+
+        .platform-large:hover {
+            transform: translateY(-2px);
+
+            border-color: #7867ff;
+
+            color: #ffffff;
+        }
+
+        /* ==================================================
+           FAQ
+        ================================================== */
+
+        .faq {
+            max-width: 800px;
+        }
+
+        details {
+            background: #101219;
+
+            border:
+                1px solid #20222c;
+
+            border-radius: 10px;
+
+            margin-bottom: 10px;
+
+            padding:
+                18px 20px;
+        }
+
+        summary {
+            cursor: pointer;
+
+            font-weight: 700;
+        }
+
+        details p {
+            color: #9295a1;
+
+            line-height: 1.7;
+
+            padding-top: 15px;
+        }
+
+        /* ==================================================
+           FOOTER
+        ================================================== */
+
+        footer {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+
+            padding:
+                45px 8%;
+
+            border-top:
+                1px solid #1c1e27;
+
+            color: #6f727e;
+
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+
+        /* ==================================================
+           MOBILE
+        ================================================== */
+
+        @media (max-width: 700px) {
+
+            nav {
+                height: 62px;
+
+                padding:
+                    0 5%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            section {
+                padding:
+                    75px 6%;
+            }
+
+            .hero {
+                padding:
+                    120px 6% 80px;
+            }
+
+            .hero h1 {
+                font-size: 56px;
+
+                letter-spacing: -2px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            footer {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         NAVIGATION
+    ================================================== -->
+
+    <nav>
+
+        <a
+            href="#"
+            class="logo"
+        >
+            Nova Labs Code
+        </a>
+
+        <div class="nav-links">
+
+            <a href="#games">
+                Games
+            </a>
+
+            <a href="#models">
+                Models
+            </a>
+
+            <a href="#store">
+                Store
+            </a>
+
+            <a href="#updates">
+                Updates
+            </a>
+
+            <a href="#faq">
+                FAQ
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ==================================================
+         HERO
+    ================================================== -->
+
+    <header class="hero">
+
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                Nova Labs Code
+            </div>
+
+            <h1>
+                BUILD.<br>
+                PLAY.<br>
+                DISCOVER.
+            </h1>
+
+            <p>
+                We create games, worlds, models, and
+                experiences for players and creators.
+            </p>
+
+            <div class="buttons">
+
+                <a
+                    href="#games"
+                    class="button primary"
+                >
+                    Explore Games
+                </a>
+
+                <a
+                    href="#models"
+                    class="button secondary"
+                >
+                    Browse Models
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==================================================
+         GAMES
+    ================================================== -->
+
+    <section
+        id="games"
+        class="games"
+    >
+
+        <h2 class="section-title">
+            Our Games
+        </h2>
+
+        <p class="section-subtitle">
+            Explore our games and experiences.
+        </p>
+
+        <div class="games-grid">
+
+
+            <!-- GAME CARD -->
+
+            <article class="game-card">
+
+                <div class="game-image">
+                    GAME IMAGE
+                </div>
+
+                <div class="game-info">
+
+                    <h3>
+                        Game Name
+                    </h3>
+
+                    <p>
+                        A short description of your game
+                        goes here.
+                    </p>
+
+                    <div class="platforms">
+
+                        <span class="platform">
+                            Roblox
+                        </span>
+
+                    </div>
+
+                    <a
+                        href="YOUR_ROBLOX_GAME_URL"
+                        class="button primary"
+                    >
+                        Play on Roblox
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- GAME CARD -->
+
+            <article class="game-card">
+
+                <div class="game-image">
+                    GAME IMAGE
+                </div>
+
+                <div class="game-info">
+
+                    <h3>
+                        Another Game
+                    </h3>
+
+                    <p>
+                        Another short description
+                        goes here.
+                    </p>
+
+                    <div class="platforms">
+
+                        <span class="platform">
+                            Roblox
+                        </span>
+
+                    </div>
+
+                    <a
+                        href="YOUR_ROBLOX_GAME_URL"
+                        class="button primary"
+                    >
+                        Play on Roblox
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- ADD MORE GAME CARDS HERE -->
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         MODELS
+    ================================================== -->
+
+    <section
+        id="models"
+        class="models"
+    >
+
+        <h2 class="section-title">
+            Models & Assets
+        </h2>
+
+        <p class="section-subtitle">
+            Free models and assets that you can use
+            in your own projects.
+        </p>
+
+        <div class="models-grid">
+
+
+            <!-- MODEL CARD -->
+
+            <article class="model-card">
+
+                <div class="model-preview">
+                    MODEL PREVIEW
+                </div>
+
+                <div class="model-info">
+
+                    <h3>
+                        Free Model
+                    </h3>
+
+                    <p>
+                        A free model ready to use
+                        in your Roblox projects.
+                    </p>
+
+                    <div class="model-meta">
+
+                        <span class="model-type">
+                            Roblox
+                        </span>
+
+                        <span class="free">
+                            FREE
+                        </span>
+
+                    </div>
+
+                    <a
+                        href="YOUR_MODEL_URL"
+                        class="button primary"
+                    >
+                        Get Model
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- MODEL CARD -->
+
+            <article class="model-card">
+
+                <div class="model-preview">
+                    MODEL PREVIEW
+                </div>
+
+                <div class="model-info">
+
+                    <h3>
+                        Sci-Fi Pack
+                    </h3>
+
+                    <p>
+                        A collection of free sci-fi
+                        assets for creators.
+                    </p>
+
+                    <div class="model-meta">
+
+                        <span class="model-type">
+                            Roblox
+                        </span>
+
+                        <span class="free">
+                            FREE
+                        </span>
+
+                    </div>
+
+                    <a
+                        href="YOUR_MODEL_URL"
+                        class="button primary"
+                    >
+                        Get Model
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- MODEL CARD -->
+
+            <article class="model-card">
+
+                <div class="model-preview">
+                    MODEL PREVIEW
+                </div>
+
+                <div class="model-info">
+
+                    <h3>
+                        Environment Pack
+                    </h3>
+
+                    <p>
+                        Free environment assets
+                        for your projects.
+                    </p>
+
+                    <div class="model-meta">
+
+                        <span class="model-type">
+                            Roblox
+                        </span>
+
+                        <span class="free">
+                            FREE
+                        </span>
+
+                    </div>
+
+                    <a
+                        href="YOUR_MODEL_URL"
+                        class="button primary"
+                    >
+                        Get Model
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- ADD MORE MODEL CARDS HERE -->
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         STORE
+    ================================================== -->
+
+    <section
+        id="store"
+        class="store"
+    >
+
+        <h2 class="section-title">
+            Store
+        </h2>
+
+        <p class="section-subtitle">
+            Everything on our store is currently free.
+        </p>
+
+        <div class="free-notice">
+
+            <strong>
+                FREE
+            </strong>
+
+            <span>
+                All games, models, assets, and downloads
+                currently available here are free.
+            </span>
+
+        </div>
+
+        <div class="store-grid">
+
+
+            <!-- STORE ITEM -->
+
+            <article class="store-item">
+
+                <div class="store-image">
+                    PRODUCT IMAGE
+                </div>
+
+                <h3>
+                    Free Asset Pack
+                </h3>
+
+                <p>
+                    A collection of assets available
+                    completely free.
+                </p>
+
+                <div class="store-status">
+                    FREE
+                </div>
+
+                <br>
+
+                <a
+                    href="YOUR_DOWNLOAD_URL"
+                    class="button primary"
+                >
+                    Get It
+                </a>
+
+            </article>
+
+
+            <!-- STORE ITEM -->
+
+            <article class="store-item">
+
+                <div class="store-image">
+                    PRODUCT IMAGE
+                </div>
+
+                <h3>
+                    Creator Pack
+                </h3>
+
+                <p>
+                    Useful resources for creators
+                    and developers.
+                </p>
+
+                <div class="store-status">
+                    FREE
+                </div>
+
+                <br>
+
+                <a
+                    href="YOUR_DOWNLOAD_URL"
+                    class="button primary"
+                >
+                    Get It
+                </a>
+
+            </article>
+
+
+            <!-- ADD MORE STORE ITEMS HERE -->
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         UPDATES
+    ================================================== -->
+
+    <section
+        id="updates"
+        class="updates"
+    >
+
+        <h2 class="section-title">
+            Latest Update
+        </h2>
+
+        <p class="section-subtitle">
+            What's happening with our games and projects.
+        </p>
+
+        <div class="update-box">
+
+            <div class="update-date">
+                AUGUST 24, 2026
+            </div>
+
+            <h3>
+                Welcome to the new website
+            </h3>
+
+            <p>
+                We're working on new games, models,
+                assets, features, and experiences.
+                Stay tuned for what's coming next.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         PLATFORMS
+    ================================================== -->
+
+    <section
+        class="platform-section"
+    >
+
+        <h2 class="section-title">
+            Find Us
+        </h2>
+
+        <p class="section-subtitle">
+            Follow our official pages and play
+            our games on Roblox.
+        </p>
+
+        <div class="platform-list">
+
+            <a
+                href="YOUR_ROBLOX_PROFILE_OR_GROUP_URL"
+                class="platform-large"
+                target="_blank"
+                rel="noopener"
+            >
+                Roblox
+            </a>
+
+            <a
+                href="YOUR_YOUTUBE_CHANNEL_URL"
+                class="platform-large"
+                target="_blank"
+                rel="noopener"
+            >
+                YouTube
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         FAQ
+    ================================================== -->
+
+    <section id="faq">
+
+        <h2 class="section-title">
+            FAQ
+        </h2>
+
+        <p class="section-subtitle">
+            Frequently asked questions.
+        </p>
+
+        <div class="faq">
+
+
+            <details>
+
+                <summary>
+                    Where can I play your games?
+                </summary>
+
+                <p>
+                    Our games are currently available
+                    on Roblox.
+                </p>
+
+            </details>
+
+
+            <details>
+
+                <summary>
+                    Are your games free?
+                </summary>
+
+                <p>
+                    Yes. Everything currently available
+                    through this website is free.
+                </p>
+
+            </details>
+
+
+            <details>
+
+                <summary>
+                    Are the models free?
+                </summary>
+
+                <p>
+                    Yes. The models and assets currently
+                    listed on this website are free.
+                </p>
+
+            </details>
+
+
+            <details>
+
+                <summary>
+                    Can I use the models in my own games?
+                </summary>
+
+                <p>
+                    Check the license or usage terms
+                    provided with each individual model
+                    before using it in a published project.
+                </p>
+
+            </details>
+
+
+            <details>
+
+                <summary>
+                    Where can I follow development?
+                </summary>
+
+                <p>
+                    Follow our YouTube channel for
+                    development videos, announcements,
+                    and other updates.
+                </p>
+
+            </details>
+
+
+            <details>
+
+                <summary>
+                    Will paid products be available later?
+                </summary>
+
+                <p>
+                    Possibly. If paid products are added
+                    in the future, they will be clearly
+                    marked before purchase.
+                </p>
+
+            </details>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         FOOTER
+    ================================================== -->
+
+    <footer>
+
+        <div>
+            © 2026 Nova Labs Code.
+            All rights reserved.
+        </div>
+
+        <div class="footer-links">
+
+            <a
+                href="YOUR_ROBLOX_PROFILE_OR_GROUP_URL"
+                target="_blank"
+                rel="noopener"
+            >
+                Roblox
+            </a>
+
+            <a
+                href="YOUR_YOUTUBE_CHANNEL_URL"
+                target="_blank"
+                rel="noopener"
+            >
+                YouTube
+            </a>
+
+        </div>
+
+    </footer>
+
+
+</body>
+</html>
