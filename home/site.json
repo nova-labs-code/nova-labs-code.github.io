@@ -1,0 +1,123 @@
+{
+    "studio": {
+        "name": "Nova Labs Code",
+        "tagline": "BUILD. PLAY. DISCOVER.",
+        "description": "We create games, worlds, models, and experiences for players and creators.",
+        "roblox": "YOUR_ROBLOX_URL",
+        "youtube": "YOUR_YOUTUBE_URL"
+    },
+
+    "hero": {
+        "eyebrow": "Nova Labs Code",
+        "title": [
+            "BUILD.",
+            "PLAY.",
+            "DISCOVER."
+        ],
+        "description": "We create games, worlds, models, and experiences for players and creators.",
+        "primaryButton": {
+            "text": "Explore Games",
+            "link": "#games"
+        },
+        "secondaryButton": {
+            "text": "Browse Models",
+            "link": "#models"
+        }
+    },
+
+    "games": [
+        {
+            "name": "Game Name",
+            "description": "A short description of your game goes here.",
+            "image": "images/game1.png",
+            "platform": "Roblox",
+            "link": "YOUR_ROBLOX_GAME_URL"
+        },
+
+        {
+            "name": "Another Game",
+            "description": "Another short description goes here.",
+            "image": "images/game2.png",
+            "platform": "Roblox",
+            "link": "YOUR_ROBLOX_GAME_URL"
+        }
+    ],
+
+    "models": [
+        {
+            "name": "Free Model",
+            "description": "A free model ready to use in your Roblox projects.",
+            "image": "images/model1.png",
+            "platform": "Roblox",
+            "type": "FREE",
+            "link": "YOUR_MODEL_URL"
+        },
+
+        {
+            "name": "Sci-Fi Pack",
+            "description": "A collection of free sci-fi assets for creators.",
+            "image": "images/model2.png",
+            "platform": "Roblox",
+            "type": "FREE",
+            "link": "YOUR_MODEL_URL"
+        }
+    ],
+
+    "store": [
+        {
+            "name": "Free Asset Pack",
+            "description": "A collection of assets available completely free.",
+            "image": "images/store1.png",
+            "type": "FREE",
+            "link": "YOUR_DOWNLOAD_URL"
+        },
+
+        {
+            "name": "Creator Pack",
+            "description": "Useful resources for creators and developers.",
+            "image": "images/store2.png",
+            "type": "FREE",
+            "link": "YOUR_DOWNLOAD_URL"
+        }
+    ],
+
+    "updates": [
+        {
+            "date": "AUGUST 24, 2026",
+            "title": "Welcome to the new website",
+            "description": "We're working on new games, models, assets, features, and experiences. Stay tuned for what's coming next."
+        }
+    ],
+
+    "faq": [
+        {
+            "question": "Where can I play your games?",
+            "answer": "Our games are currently available on Roblox."
+        },
+
+        {
+            "question": "Are your games free?",
+            "answer": "Yes. Everything currently available through this website is free."
+        },
+
+        {
+            "question": "Are the models free?",
+            "answer": "Yes. The models and assets currently listed on this website are free."
+        },
+
+        {
+            "question": "Can I use the models in my own games?",
+            "answer": "Check the license or usage terms provided with each individual model before using it in a published project."
+        },
+
+        {
+            "question": "Where can I follow development?",
+            "answer": "Follow our YouTube channel for development videos, announcements, and other updates."
+        },
+
+        {
+            "question": "Will paid products be available later?",
+            "answer": "Possibly. If paid products are added in the future, they will be clearly marked before purchase."
+        }
+    ]
+}
