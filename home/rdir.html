@@ -2,22 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Redirecting...</title>
 
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const url = params.get("url");
+        const search = window.location.search;
 
-        if (url) {
-            window.location.replace(url);
+        if (search.startsWith("?url=")) {
+
+            const url = search.substring(5);
+
+            if (url) {
+                window.location.replace(url);
+            } else {
+                document.title = "Invalid Redirect";
+
+                document.body.innerHTML = `
+                    <h1>Invalid redirect</h1>
+                    <p>No URL was provided.</p>
+                `;
+            }
+
         } else {
+
             document.title = "Invalid Redirect";
 
             document.body.innerHTML = `
                 <h1>Invalid redirect</h1>
                 <p>No URL was provided.</p>
             `;
+
         }
     </script>
 </head>
