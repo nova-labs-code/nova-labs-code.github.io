@@ -15,7 +15,7 @@
 
         if (search.startsWith("?q=")) {
 
-            const url = search.substring(5);
+            const url = search.substring(3);
 
             if (url) {
                 window.location.replace(url);
@@ -36,7 +36,6 @@
                 <h1>Invalid redirect</h1>
                 <p>No URL was provided.</p>
             `;
-
         }
     </script>
 </head>
