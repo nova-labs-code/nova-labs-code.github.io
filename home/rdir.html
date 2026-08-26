@@ -11,32 +11,56 @@
     <title>Redirecting...</title>
 
     <script>
-        const search = window.location.search;
+        const code = window.location.search.substring(1);
 
-        if (search.startsWith("?q=")) {
+        async function redirect() {
 
-            const url = search.substring(3);
-
-            if (url) {
-                window.location.replace(url);
-            } else {
-                document.title = "Invalid Redirect";
-
-                document.body.innerHTML = `
-                    <h1>Invalid redirect</h1>
-                    <p>No URL was provided.</p>
-                `;
+            if (!code) {
+                showError("No share code was provided.");
+                return;
             }
 
-        } else {
+            try {
+
+                const response = await fetch(
+                    "../site-linking.json"
+                );
+
+                if (!response.ok) {
+                    throw new Error("Could not load site-linking.json");
+                }
+
+                const links = await response.json();
+
+                const url = links[code];
+
+                if (url) {
+                    window.location.replace(url);
+                } else {
+                    showError("Invalid share code.");
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                showError(
+                    "Unable to load the redirect information."
+                );
+            }
+        }
+
+        function showError(message) {
 
             document.title = "Invalid Redirect";
 
             document.body.innerHTML = `
                 <h1>Invalid redirect</h1>
-                <p>No URL was provided.</p>
+                <p>${message}</p>
             `;
         }
+
+        redirect();
     </script>
 </head>
 
