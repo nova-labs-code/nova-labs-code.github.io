@@ -30,11 +30,7 @@ async function loadSite() {
             ">
                 <div>
                     <h1>Unable to load website</h1>
-
-                    <p style="
-                        color:#999;
-                        margin-top:10px;
-                    ">
+                    <p style="color:#999;margin-top:10px;">
                         Please check that site.json is available.
                     </p>
                 </div>
@@ -324,99 +320,82 @@ function buildSite(data) {
     const pagesContainer =
         document.getElementById("pagesContainer");
 
-    if (pagesContainer) {
+    pagesContainer.innerHTML = "";
 
-        pagesContainer.innerHTML = "";
+    if (data.pages && typeof data.pages === "object") {
 
-        Object.entries(data.pages || {}).forEach(
-            ([groupName, items]) => {
+        Object.keys(data.pages).forEach(category => {
 
-                const group =
-                    document.createElement("div");
+            const section =
+                document.createElement("div");
 
-                group.className =
-                    "page-group";
+            section.className = "page-category";
 
 
-                const title =
-                    document.createElement("h3");
+            /* CATEGORY TITLE */
 
-                title.className =
-                    "page-group-title";
+            const title =
+                document.createElement("h3");
 
-                title.textContent =
-                    groupName;
+            title.className = "page-category-title";
 
-
-                const grid =
-                    document.createElement("div");
-
-                grid.className =
-                    "pages-grid";
+            title.textContent = category;
 
 
-                items.forEach(item => {
+            /* PAGE GRID */
 
-                    const card =
-                        document.createElement("a");
+            const grid =
+                document.createElement("div");
 
-                    card.className =
-                        "page-card";
-
-                    card.href =
-                        item.url;
+            grid.className = "pages-grid";
 
 
-                    /*
-                     * External URLs open in a new tab.
-                     * rdir links remain on your site.
-                     */
+            /* PAGE CARDS */
 
-                    if (
-                        /^https?:\/\//i.test(
-                            item.url
-                        )
-                    ) {
+            data.pages[category].forEach(page => {
 
-                        card.target =
-                            "_blank";
+                const card =
+                    document.createElement("a");
 
-                        card.rel =
-                            "noopener noreferrer";
+                card.className = "page-card";
 
-                    }
+                card.href = page.url;
 
 
-                    card.innerHTML = `
+                /*
+                    External URLs open in a new tab.
+                    rdir links remain normal links.
+                */
 
-                        <div class="page-card-content">
+                if (/^https?:\/\//i.test(page.url)) {
 
-                            <div class="page-card-title">
-                                ${escapeHTML(item.name)}
-                            </div>
+                    card.target = "_blank";
 
-                        </div>
-
-                        <div class="page-card-arrow">
-                            →
-                        </div>
-
-                    `;
+                    card.rel =
+                        "noopener noreferrer";
+                }
 
 
-                    grid.appendChild(card);
+                card.innerHTML = `
 
-                });
+                    <div class="page-card-title">
+                        ${escapeHTML(page.name)}
+                    </div>
+
+                `;
+
+                grid.appendChild(card);
+
+            });
 
 
-                group.appendChild(title);
+            section.appendChild(title);
 
-                group.appendChild(grid);
+            section.appendChild(grid);
 
-                pagesContainer.appendChild(group);
+            pagesContainer.appendChild(section);
 
-            }
-        );
+        });
 
     }
 
@@ -490,7 +469,7 @@ function buildSite(data) {
 
 
     /* ==================================================
-       LINKS
+       PLATFORM LINKS
     ================================================== */
 
     document.getElementById("robloxLink").href =
