@@ -1,18 +1,20 @@
+/* ==================================================
+   LOAD SITE
+================================================== */
+
 async function loadSite() {
 
     try {
 
-        const response =
-            await fetch("site.json");
+        const response = await fetch("site.json", {
+            cache: "no-cache"
+        });
 
         if (!response.ok) {
-            throw new Error(
-                "Could not load site.json"
-            );
+            throw new Error("Could not load site.json");
         }
 
-        const data =
-            await response.json();
+        const data = await response.json();
 
         buildSite(data);
 
@@ -28,21 +30,18 @@ async function loadSite() {
                 justify-content:center;
                 background:#08090d;
                 color:white;
-                font-family:Arial;
+                font-family:Arial, sans-serif;
                 text-align:center;
                 padding:30px;
             ">
                 <div>
-                    <h1>
-                        Unable to load website
-                    </h1>
+                    <h1>Unable to load website</h1>
 
                     <p style="
                         color:#999;
                         margin-top:10px;
                     ">
-                        Please check that site.json
-                        is available and valid.
+                        Please check that site.json is available.
                     </p>
                 </div>
             </div>
@@ -57,11 +56,8 @@ async function loadSite() {
 
 function buildSite(data) {
 
-    const studio =
-        data.studio;
-
-    const hero =
-        data.hero;
+    const studio = data.studio || {};
+    const hero = data.hero || {};
 
 
     /* ==================================================
@@ -69,85 +65,99 @@ function buildSite(data) {
     ================================================== */
 
     document.title =
-        studio.name;
+        studio.name || "Nova Labs Code";
 
-    document.getElementById(
-        "navLogo"
-    ).textContent =
-        studio.name;
+    const navLogo =
+        document.getElementById("navLogo");
 
-    document.getElementById(
-        "copyright"
-    ).textContent =
-        `© 2026 ${studio.name}. All rights reserved.`;
+    if (navLogo) {
+        navLogo.textContent =
+            studio.name || "Nova Labs Code";
+    }
+
+    const copyright =
+        document.getElementById("copyright");
+
+    if (copyright) {
+        copyright.textContent =
+            `© 2026 ${studio.name || "Nova Labs Code"}. All rights reserved.`;
+    }
 
 
     /* ==================================================
        HERO
     ================================================== */
 
-    document.getElementById(
-        "heroEyebrow"
-    ).textContent =
-        hero.eyebrow;
+    const heroEyebrow =
+        document.getElementById("heroEyebrow");
+
+    if (heroEyebrow) {
+        heroEyebrow.textContent =
+            hero.eyebrow || "";
+    }
 
 
     const heroTitle =
-        document.getElementById(
-            "heroTitle"
-        );
+        document.getElementById("heroTitle");
 
-    heroTitle.innerHTML = "";
+    if (heroTitle) {
+
+        heroTitle.innerHTML = "";
+
+        if (Array.isArray(hero.title)) {
+
+            hero.title.forEach(line => {
+
+                const span =
+                    document.createElement("span");
+
+                span.textContent =
+                    line;
+
+                span.style.display =
+                    "block";
+
+                heroTitle.appendChild(span);
+
+            });
+
+        }
+    }
 
 
-    hero.title.forEach(line => {
+    const heroDescription =
+        document.getElementById("heroDescription");
 
-        const span =
-            document.createElement(
-                "span"
-            );
-
-        span.textContent =
-            line;
-
-        span.style.display =
-            "block";
-
-        heroTitle.appendChild(
-            span
-        );
-
-    });
-
-
-    document.getElementById(
-        "heroDescription"
-    ).textContent =
-        hero.description;
+    if (heroDescription) {
+        heroDescription.textContent =
+            hero.description || "";
+    }
 
 
     const primary =
-        document.getElementById(
-            "heroPrimary"
-        );
+        document.getElementById("heroPrimary");
 
-    primary.textContent =
-        hero.primaryButton.text;
+    if (primary && hero.primaryButton) {
 
-    primary.href =
-        hero.primaryButton.link;
+        primary.textContent =
+            hero.primaryButton.text || "";
+
+        primary.href =
+            hero.primaryButton.link || "#";
+    }
 
 
     const secondary =
-        document.getElementById(
-            "heroSecondary"
-        );
+        document.getElementById("heroSecondary");
 
-    secondary.textContent =
-        hero.secondaryButton.text;
+    if (secondary && hero.secondaryButton) {
 
-    secondary.href =
-        hero.secondaryButton.link;
+        secondary.textContent =
+            hero.secondaryButton.text || "";
+
+        secondary.href =
+            hero.secondaryButton.link || "#";
+    }
 
 
     /* ==================================================
@@ -155,42 +165,43 @@ function buildSite(data) {
     ================================================== */
 
     const gamesGrid =
-        document.getElementById(
-            "gamesGrid"
-        );
+        document.getElementById("gamesGrid");
 
-    gamesGrid.innerHTML = "";
+    if (gamesGrid) {
 
+        gamesGrid.innerHTML = "";
 
-    if (Array.isArray(data.games)) {
+        const games =
+            Array.isArray(data.games)
+                ? data.games
+                : [];
 
-        data.games.forEach(game => {
+        games.forEach(game => {
 
             const card =
-                document.createElement(
-                    "article"
-                );
+                document.createElement("article");
 
             card.className =
                 "game-card";
 
-
-            const imageHTML =
-                game.image
-                ? `
-                    <img
-                        src="${escapeHTML(game.image)}"
-                        alt="${escapeHTML(game.name)}"
-                        loading="lazy"
-                    >
-                `
-                : "GAME IMAGE";
-
-
             card.innerHTML = `
 
                 <div class="game-image">
-                    ${imageHTML}
+
+                    ${
+                        game.image
+                        ? `
+                            <img
+                                src="${escapeHTML(game.image)}"
+                                alt="${escapeHTML(game.name)}"
+                                loading="lazy"
+                            >
+                        `
+                        : `
+                            GAME IMAGE
+                        `
+                    }
+
                 </div>
 
                 <div class="game-info">
@@ -214,21 +225,23 @@ function buildSite(data) {
                     <a
                         href="${escapeHTML(game.link)}"
                         class="button primary"
+                        ${isExternal(game.link)
+                            ? `
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            `
+                            : ""
+                        }
                     >
                         Play on Roblox
                     </a>
 
                 </div>
-
             `;
 
-
-            gamesGrid.appendChild(
-                card
-            );
+            gamesGrid.appendChild(card);
 
         });
-
     }
 
 
@@ -237,42 +250,43 @@ function buildSite(data) {
     ================================================== */
 
     const modelsGrid =
-        document.getElementById(
-            "modelsGrid"
-        );
+        document.getElementById("modelsGrid");
 
-    modelsGrid.innerHTML = "";
+    if (modelsGrid) {
 
+        modelsGrid.innerHTML = "";
 
-    if (Array.isArray(data.models)) {
+        const models =
+            Array.isArray(data.models)
+                ? data.models
+                : [];
 
-        data.models.forEach(model => {
+        models.forEach(model => {
 
             const card =
-                document.createElement(
-                    "article"
-                );
+                document.createElement("article");
 
             card.className =
                 "model-card";
 
-
-            const imageHTML =
-                model.image
-                ? `
-                    <img
-                        src="${escapeHTML(model.image)}"
-                        alt="${escapeHTML(model.name)}"
-                        loading="lazy"
-                    >
-                `
-                : "MODEL PREVIEW";
-
-
             card.innerHTML = `
 
                 <div class="model-preview">
-                    ${imageHTML}
+
+                    ${
+                        model.image
+                        ? `
+                            <img
+                                src="${escapeHTML(model.image)}"
+                                alt="${escapeHTML(model.name)}"
+                                loading="lazy"
+                            >
+                        `
+                        : `
+                            MODEL PREVIEW
+                        `
+                    }
+
                 </div>
 
                 <div class="model-info">
@@ -300,23 +314,23 @@ function buildSite(data) {
                     <a
                         href="${escapeHTML(model.link)}"
                         class="button primary"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        ${isExternal(model.link)
+                            ? `
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            `
+                            : ""
+                        }
                     >
                         Get Model
                     </a>
 
                 </div>
-
             `;
 
-
-            modelsGrid.appendChild(
-                card
-            );
+            modelsGrid.appendChild(card);
 
         });
-
     }
 
 
@@ -325,42 +339,43 @@ function buildSite(data) {
     ================================================== */
 
     const storeGrid =
-        document.getElementById(
-            "storeGrid"
-        );
+        document.getElementById("storeGrid");
 
-    storeGrid.innerHTML = "";
+    if (storeGrid) {
 
+        storeGrid.innerHTML = "";
 
-    if (Array.isArray(data.store)) {
+        const store =
+            Array.isArray(data.store)
+                ? data.store
+                : [];
 
-        data.store.forEach(item => {
+        store.forEach(item => {
 
             const card =
-                document.createElement(
-                    "article"
-                );
+                document.createElement("article");
 
             card.className =
                 "store-item";
 
-
-            const imageHTML =
-                item.image
-                ? `
-                    <img
-                        src="${escapeHTML(item.image)}"
-                        alt="${escapeHTML(item.name)}"
-                        loading="lazy"
-                    >
-                `
-                : "PRODUCT IMAGE";
-
-
             card.innerHTML = `
 
                 <div class="store-image">
-                    ${imageHTML}
+
+                    ${
+                        item.image
+                        ? `
+                            <img
+                                src="${escapeHTML(item.image)}"
+                                alt="${escapeHTML(item.name)}"
+                                loading="lazy"
+                            >
+                        `
+                        : `
+                            PRODUCT IMAGE
+                        `
+                    }
+
                 </div>
 
                 <h3>
@@ -380,21 +395,22 @@ function buildSite(data) {
                 <a
                     href="${escapeHTML(item.link)}"
                     class="button primary"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    ${isExternal(item.link)
+                        ? `
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        `
+                        : ""
+                    }
                 >
                     Get It
                 </a>
 
             `;
 
-
-            storeGrid.appendChild(
-                card
-            );
+            storeGrid.appendChild(card);
 
         });
-
     }
 
 
@@ -403,153 +419,131 @@ function buildSite(data) {
     ================================================== */
 
     const pagesContainer =
-        document.getElementById(
-            "pagesContainer"
-        );
+        document.getElementById("pagesContainer");
 
-    pagesContainer.innerHTML = "";
+    if (pagesContainer) {
 
+        pagesContainer.innerHTML = "";
 
-    if (
-        data.pages &&
-        typeof data.pages === "object"
-    ) {
+        const pages =
+            data.pages || {};
 
-        Object.entries(
-            data.pages
-        ).forEach(
-            ([category, pages]) => {
+        Object.entries(pages).forEach(
+            ([category, items]) => {
 
-                if (
-                    !Array.isArray(pages) ||
-                    pages.length === 0
-                ) {
+                if (!Array.isArray(items) ||
+                    items.length === 0) {
                     return;
                 }
 
 
                 /* CATEGORY */
 
-                const categoryElement =
-                    document.createElement(
-                        "div"
-                    );
+                const categorySection =
+                    document.createElement("div");
 
-                categoryElement.className =
+                categorySection.className =
                     "page-category";
 
 
-                /* CATEGORY TITLE */
+                /* CATEGORY HEADER */
 
-                const title =
-                    document.createElement(
-                        "h3"
-                    );
+                const header =
+                    document.createElement("div");
 
-                title.className =
-                    "page-category-title";
+                header.className =
+                    "page-category-header";
 
-                title.textContent =
-                    category;
+                header.innerHTML = `
+
+                    <h3 class="page-category-title">
+                        ${escapeHTML(category)}
+                    </h3>
+
+                `;
 
 
-                /* GRID */
+                /* PAGE GRID */
 
                 const grid =
-                    document.createElement(
-                        "div"
-                    );
+                    document.createElement("div");
+
+                /*
+                    IMPORTANT:
+                    This uses the same visual
+                    card system as the rest
+                    of the website.
+                */
 
                 grid.className =
                     "pages-grid";
 
 
-                /* PAGE CARDS */
-
-                pages.forEach(page => {
-
-                    if (
-                        !page ||
-                        !page.name ||
-                        !page.url
-                    ) {
-                        return;
-                    }
-
+                items.forEach(page => {
 
                     const card =
-                        document.createElement(
-                            "a"
-                        );
+                        document.createElement("a");
 
                     card.className =
                         "page-card";
 
                     card.href =
-                        page.url;
+                        page.url || "#";
 
 
                     /*
-                        Only real external URLs
-                        open in a new tab.
+                        Internal rdir links stay
+                        in the same tab.
 
-                        rdir?CODE stays in the
-                        current tab.
+                        Actual external URLs open
+                        in a new tab.
                     */
 
-                    if (
-                        /^https?:\/\//i.test(
-                            page.url
-                        )
-                    ) {
+                    if (isExternal(page.url)) {
 
                         card.target =
                             "_blank";
 
                         card.rel =
                             "noopener noreferrer";
-
                     }
 
 
-                    const cardTitle =
-                        document.createElement(
-                            "div"
-                        );
+                    card.innerHTML = `
 
-                    cardTitle.className =
-                        "page-card-title";
+                        <div class="page-card-content">
 
-                    cardTitle.textContent =
-                        page.name;
+                            <div class="page-card-title">
+                                ${escapeHTML(page.name)}
+                            </div>
 
+                            <div class="page-card-arrow">
+                                →
+                            </div>
 
-                    card.appendChild(
-                        cardTitle
-                    );
+                        </div>
 
-                    grid.appendChild(
-                        card
-                    );
+                    `;
+
+                    grid.appendChild(card);
 
                 });
 
 
-                categoryElement.appendChild(
-                    title
+                categorySection.appendChild(
+                    header
                 );
 
-                categoryElement.appendChild(
+                categorySection.appendChild(
                     grid
                 );
 
                 pagesContainer.appendChild(
-                    categoryElement
+                    categorySection
                 );
 
             }
         );
-
     }
 
 
@@ -558,25 +552,24 @@ function buildSite(data) {
     ================================================== */
 
     const updatesContainer =
-        document.getElementById(
-            "updatesContainer"
-        );
+        document.getElementById("updatesContainer");
 
-    updatesContainer.innerHTML = "";
+    if (updatesContainer) {
 
+        updatesContainer.innerHTML = "";
 
-    if (Array.isArray(data.updates)) {
+        const updates =
+            Array.isArray(data.updates)
+                ? data.updates
+                : [];
 
-        data.updates.forEach(update => {
+        updates.forEach(update => {
 
             const box =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             box.className =
                 "update-box";
-
 
             box.innerHTML = `
 
@@ -594,13 +587,9 @@ function buildSite(data) {
 
             `;
 
-
-            updatesContainer.appendChild(
-                box
-            );
+            updatesContainer.appendChild(box);
 
         });
-
     }
 
 
@@ -609,55 +598,39 @@ function buildSite(data) {
     ================================================== */
 
     const faqContainer =
-        document.getElementById(
-            "faqContainer"
-        );
+        document.getElementById("faqContainer");
 
-    faqContainer.innerHTML = "";
+    if (faqContainer) {
 
+        faqContainer.innerHTML = "";
 
-    if (Array.isArray(data.faq)) {
+        const faq =
+            Array.isArray(data.faq)
+                ? data.faq
+                : [];
 
-        data.faq.forEach(item => {
+        faq.forEach(item => {
 
             const details =
-                document.createElement(
-                    "details"
-                );
+                document.createElement("details");
 
+            details.innerHTML = `
 
-            const summary =
-                document.createElement(
-                    "summary"
-                );
+                <summary>
+                    ${escapeHTML(item.question)}
+                </summary>
 
-            summary.textContent =
-                item.question;
+                <p>
+                    ${escapeHTML(item.answer)}
+                </p>
 
-
-            const answer =
-                document.createElement(
-                    "p"
-                );
-
-            answer.textContent =
-                item.answer;
-
-
-            details.appendChild(
-                summary
-            );
-
-            details.appendChild(
-                answer
-            );
+            `;
 
             faqContainer.appendChild(
                 details
             );
 
         });
-
     }
 
 
@@ -684,82 +657,77 @@ function buildSite(data) {
         "footerYoutube",
         studio.youtube
     );
-
 }
 
 
 /* ==================================================
-   LINK HELPER
+   SET LINK
 ================================================== */
 
-function setLink(
-    elementId,
-    url
-) {
+function setLink(id, url) {
 
     const element =
-        document.getElementById(
-            elementId
-        );
+        document.getElementById(id);
 
     if (!element || !url) {
         return;
     }
 
-
     element.href =
         url;
 
-
-    /*
-        rdir?CODE links stay in the
-        current tab.
-
-        Actual external URLs open
-        in a new tab.
-    */
-
-    if (
-        /^https?:\/\//i.test(url)
-    ) {
+    if (isExternal(url)) {
 
         element.target =
             "_blank";
 
         element.rel =
             "noopener noreferrer";
-
-    } else {
-
-        element.removeAttribute(
-            "target"
-        );
-
-        element.removeAttribute(
-            "rel"
-        );
-
     }
-
 }
 
 
 /* ==================================================
-   SECURITY
+   EXTERNAL LINK CHECK
+================================================== */
+
+function isExternal(url) {
+
+    if (!url) {
+        return false;
+    }
+
+    /*
+        rdir links are internal links.
+    */
+
+    if (
+        url.startsWith("rdir?") ||
+        url.startsWith("./") ||
+        url.startsWith("../") ||
+        url.startsWith("/") ||
+        url.startsWith("#")
+    ) {
+        return false;
+    }
+
+    return /^https?:\/\//i.test(url);
+}
+
+
+/* ==================================================
+   HTML ESCAPING
 ================================================== */
 
 function escapeHTML(value) {
 
     const div =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
     div.textContent =
         value ?? "";
 
     return div.innerHTML;
-
 }
 
 
