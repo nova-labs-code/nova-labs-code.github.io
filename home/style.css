@@ -284,10 +284,10 @@ section {
     display: grid;
 
     /*
-        SIX FIXED COLUMNS ON LARGE SCREENS.
+        ALWAYS 6 COLUMNS ON LARGE SCREENS.
 
-        Cards keep the same width even when
-        there are fewer than six games.
+        Cards keep their size even when
+        there are fewer than 6 games.
     */
 
     grid-template-columns:
@@ -675,73 +675,91 @@ section {
     background: #08090d;
 }
 
-.page-category {
+.pages-container {
+    width: 100%;
+}
+
+.page-group {
     margin-bottom: 45px;
 }
 
-.page-category:last-child {
+.page-group:last-child {
     margin-bottom: 0;
 }
 
-.page-category-title {
-    font-size: 21px;
+.page-group-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
 
     margin-bottom: 16px;
 
-    color: #cfd2dc;
+    padding-left: 12px;
+
+    border-left: 3px solid #7867ff;
+
+    color: #d9dbe4;
+
+    font-size: 21px;
 
     font-weight: 800;
 }
 
-.pages-grid {
+.page-grid {
     display: grid;
 
+    /*
+        Six equal columns on large screens.
+        Empty spaces remain empty.
+    */
+
     grid-template-columns:
-        repeat(4, minmax(0, 1fr));
+        repeat(6, minmax(0, 1fr));
 
     gap: 14px;
 }
 
 .page-card {
-    min-height: 70px;
-
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    padding: 18px;
+    min-height: 72px;
+
+    padding: 16px;
 
     background: #101219;
 
     border: 1px solid #20222c;
 
-    border-radius: 12px;
+    border-radius: 10px;
 
-    color: #e7e8ed;
+    color: #dfe1e8;
 
     text-align: center;
 
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease;
-}
-
-.page-card:hover {
-    background: #151722;
-
-    border-color: #7867ff;
-
-    transform: translateY(-3px);
-}
-
-.page-card-title {
     font-size: 14px;
 
     font-weight: 700;
 
-    line-height: 1.4;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.page-card:hover {
+    background: #161821;
+
+    border-color: #7867ff;
+
+    color: #ffffff;
+
+    transform: translateY(-3px);
 }
 
 
@@ -972,32 +990,19 @@ body.loading {
 
 
 /* ==================================================
-   LARGE SCREENS
+   LARGE TABLETS
 ================================================== */
 
 @media (max-width: 1400px) {
 
     .games-grid {
         grid-template-columns:
-            repeat(5, minmax(0, 1fr));
-    }
-}
-
-
-/* ==================================================
-   LARGE TABLETS
-================================================== */
-
-@media (max-width: 1200px) {
-
-    .games-grid {
-        grid-template-columns:
             repeat(4, minmax(0, 1fr));
     }
 
-    .pages-grid {
+    .page-grid {
         grid-template-columns:
-            repeat(3, minmax(0, 1fr));
+            repeat(4, minmax(0, 1fr));
     }
 }
 
@@ -1006,16 +1011,16 @@ body.loading {
    TABLETS
 ================================================== */
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
 
     .games-grid {
         grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+            repeat(3, minmax(0, 1fr));
     }
 
-    .pages-grid {
+    .page-grid {
         grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+            repeat(3, minmax(0, 1fr));
     }
 
     nav {
@@ -1097,7 +1102,7 @@ body.loading {
         grid-template-columns: 1fr;
     }
 
-    .pages-grid {
+    .page-grid {
         grid-template-columns: 1fr;
     }
 
@@ -1157,6 +1162,6 @@ body.loading {
     .page-card {
         min-height: 64px;
 
-        padding: 16px;
+        font-size: 13px;
     }
 }
