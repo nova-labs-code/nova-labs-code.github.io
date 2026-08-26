@@ -3,87 +3,146 @@
 ================================================== */
 
 .pages {
-    background: #0b0c11;
+    background: #08090d;
 }
 
 .page-category {
-    margin-bottom: 45px;
+    margin-bottom: 42px;
 }
 
 .page-category:last-child {
     margin-bottom: 0;
 }
 
+.page-category-header {
+    margin-bottom: 18px;
+}
+
 .page-category-title {
     font-size: 22px;
+    font-weight: 800;
     line-height: 1.2;
-    margin-bottom: 16px;
-    color: #ffffff;
+    letter-spacing: -0.4px;
 }
+
+
+/* ==================================================
+   PAGE GRID
+================================================== */
 
 .pages-grid {
     display: grid;
 
-    /*
-        Six columns on large screens.
-        Cards keep their size instead of
-        stretching across the row.
-    */
-
     grid-template-columns:
         repeat(6, minmax(0, 1fr));
 
-    gap: 14px;
+    gap: 16px;
 }
+
+
+/* ==================================================
+   PAGE CARD
+================================================== */
 
 .page-card {
     min-width: 0;
 
-    min-height: 72px;
+    min-height: 92px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 18px;
+
+    background: #101219;
+
+    border: 1px solid #20222c;
+
+    border-radius: 14px;
+
+    color: #ffffff;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+}
+
+.page-card:hover {
+    background: #141620;
+
+    border-color: #3d4050;
+
+    transform: translateY(-5px);
+}
+
+
+/* ==================================================
+   PAGE CARD CONTENT
+================================================== */
+
+.page-card-content {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.page-card-title {
+    min-width: 0;
+
+    color: #e5e6eb;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    line-height: 1.35;
+
+    overflow-wrap: anywhere;
+}
+
+.page-card-arrow {
+    flex-shrink: 0;
+
+    width: 30px;
+    height: 30px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    padding: 16px;
+    border-radius: 7px;
 
-    background: #101219;
+    background: #191b24;
 
-    border: 1px solid #20222c;
+    color: #8d7cff;
 
-    border-radius: 12px;
-
-    color: #e5e6eb;
-
-    text-align: center;
-
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 17px;
 
     transition:
-        transform 0.2s ease,
         background 0.2s ease,
-        border-color 0.2s ease;
+        transform 0.2s ease;
 }
 
-.page-card:hover {
-    background: #151821;
+.page-card:hover .page-card-arrow {
+    background: #7867ff;
 
-    border-color: #3d4050;
+    color: #ffffff;
 
-    transform: translateY(-4px);
-}
-
-.page-card-title {
-    width: 100%;
-
-    overflow-wrap: anywhere;
+    transform: translateX(3px);
 }
 
 
 /* ==================================================
-   LARGE TABLETS / SMALL DESKTOPS
+   LARGE TABLETS
 ================================================== */
 
 @media (max-width: 1200px) {
@@ -105,21 +164,19 @@
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
 
-        gap: 12px;
+        gap: 14px;
     }
 
     .page-card {
-        min-height: 68px;
+        min-height: 82px;
 
-        padding: 14px 12px;
+        padding: 16px;
 
-        font-size: 13px;
+        border-radius: 12px;
     }
 
-    .page-category-title {
-        font-size: 20px;
-
-        margin-bottom: 14px;
+    .page-card-title {
+        font-size: 13px;
     }
 
     .page-category {
@@ -142,29 +199,44 @@
     }
 
     .page-card {
-        min-height: 64px;
+        min-height: 76px;
 
-        padding: 12px 10px;
+        padding: 13px;
 
-        border-radius: 10px;
+        border-radius: 11px;
+    }
 
+    .page-card-content {
+        gap: 8px;
+    }
+
+    .page-card-title {
         font-size: 12px;
+
+        line-height: 1.3;
+    }
+
+    .page-card-arrow {
+        width: 25px;
+        height: 25px;
+
+        border-radius: 6px;
+
+        font-size: 14px;
     }
 
     .page-category-title {
         font-size: 19px;
-
-        margin-bottom: 12px;
     }
 
     .page-category {
-        margin-bottom: 32px;
+        margin-bottom: 30px;
     }
 }
 
 
 /* ==================================================
-   VERY SMALL PHONES
+   SMALL PHONES
 ================================================== */
 
 @media (max-width: 380px) {
@@ -174,14 +246,19 @@
     }
 
     .page-card {
-        min-height: 60px;
+        min-height: 70px;
 
-        padding: 10px 7px;
+        padding: 11px;
+    }
 
+    .page-card-title {
         font-size: 11px;
     }
 
-    .page-category-title {
-        font-size: 18px;
+    .page-card-arrow {
+        width: 22px;
+        height: 22px;
+
+        font-size: 12px;
     }
 }
