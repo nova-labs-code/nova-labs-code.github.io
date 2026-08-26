@@ -73,6 +73,7 @@ nav {
 
 .nav-links a {
     color: #9da0ac;
+
     font-size: 14px;
     font-weight: 600;
 
@@ -83,6 +84,7 @@ nav {
 
 .nav-links a:hover {
     color: #ffffff;
+
     transform: translateY(-1px);
 }
 
@@ -139,6 +141,7 @@ nav {
 
 .hero-content {
     position: relative;
+
     z-index: 2;
 
     max-width: 760px;
@@ -186,7 +189,9 @@ nav {
 
 .buttons {
     display: flex;
+
     gap: 12px;
+
     flex-wrap: wrap;
 }
 
@@ -213,11 +218,13 @@ nav {
 
 .button.primary {
     background: #7867ff;
+
     color: #ffffff;
 }
 
 .button.primary:hover {
     background: #8b7cff;
+
     transform: translateY(-2px);
 }
 
@@ -277,13 +284,14 @@ section {
     display: grid;
 
     /*
-        Always 6 columns on large screens.
-        Empty spots stay empty instead of
-        stretching the remaining cards.
+        SIX FIXED COLUMNS ON LARGE SCREENS.
+
+        Cards keep the same width even when
+        there are fewer than six games.
     */
 
     grid-template-columns:
-        repeat(4, minmax(0, 1fr));
+        repeat(6, minmax(0, 1fr));
 
     gap: 20px;
 }
@@ -660,6 +668,84 @@ section {
 
 
 /* ==================================================
+   PAGES
+================================================== */
+
+.pages {
+    background: #08090d;
+}
+
+.page-category {
+    margin-bottom: 45px;
+}
+
+.page-category:last-child {
+    margin-bottom: 0;
+}
+
+.page-category-title {
+    font-size: 21px;
+
+    margin-bottom: 16px;
+
+    color: #cfd2dc;
+
+    font-weight: 800;
+}
+
+.pages-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+.page-card {
+    min-height: 70px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px;
+
+    background: #101219;
+
+    border: 1px solid #20222c;
+
+    border-radius: 12px;
+
+    color: #e7e8ed;
+
+    text-align: center;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.page-card:hover {
+    background: #151722;
+
+    border-color: #7867ff;
+
+    transform: translateY(-3px);
+}
+
+.page-card-title {
+    font-size: 14px;
+
+    font-weight: 700;
+
+    line-height: 1.4;
+}
+
+
+/* ==================================================
    UPDATES
 ================================================== */
 
@@ -886,6 +972,19 @@ body.loading {
 
 
 /* ==================================================
+   LARGE SCREENS
+================================================== */
+
+@media (max-width: 1400px) {
+
+    .games-grid {
+        grid-template-columns:
+            repeat(5, minmax(0, 1fr));
+    }
+}
+
+
+/* ==================================================
    LARGE TABLETS
 ================================================== */
 
@@ -894,6 +993,11 @@ body.loading {
     .games-grid {
         grid-template-columns:
             repeat(4, minmax(0, 1fr));
+    }
+
+    .pages-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
     }
 }
 
@@ -905,6 +1009,11 @@ body.loading {
 @media (max-width: 800px) {
 
     .games-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .pages-grid {
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
     }
@@ -988,6 +1097,10 @@ body.loading {
         grid-template-columns: 1fr;
     }
 
+    .pages-grid {
+        grid-template-columns: 1fr;
+    }
+
     .buttons {
         width: 100%;
     }
@@ -1039,5 +1152,11 @@ body.loading {
 
     .store-item {
         padding: 18px;
+    }
+
+    .page-card {
+        min-height: 64px;
+
+        padding: 16px;
     }
 }
