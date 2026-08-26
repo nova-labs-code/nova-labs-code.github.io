@@ -30,7 +30,11 @@ async function loadSite() {
             ">
                 <div>
                     <h1>Unable to load website</h1>
-                    <p style="color:#999;margin-top:10px;">
+
+                    <p style="
+                        color:#999;
+                        margin-top:10px;
+                    ">
                         Please check that site.json is available.
                     </p>
                 </div>
@@ -277,12 +281,6 @@ function buildSite(data) {
                         src="${escapeHTML(item.image)}"
                         alt="${escapeHTML(item.name)}"
                         loading="lazy"
-                        style="
-                            width:100%;
-                            height:100%;
-                            object-fit:cover;
-                            border-radius:8px;
-                        "
                     >`
                     : "PRODUCT IMAGE"
                 }
@@ -317,6 +315,110 @@ function buildSite(data) {
         storeGrid.appendChild(card);
 
     });
+
+
+    /* ==================================================
+       PAGES
+    ================================================== */
+
+    const pagesContainer =
+        document.getElementById("pagesContainer");
+
+    if (pagesContainer) {
+
+        pagesContainer.innerHTML = "";
+
+        Object.entries(data.pages || {}).forEach(
+            ([groupName, items]) => {
+
+                const group =
+                    document.createElement("div");
+
+                group.className =
+                    "page-group";
+
+
+                const title =
+                    document.createElement("h3");
+
+                title.className =
+                    "page-group-title";
+
+                title.textContent =
+                    groupName;
+
+
+                const grid =
+                    document.createElement("div");
+
+                grid.className =
+                    "pages-grid";
+
+
+                items.forEach(item => {
+
+                    const card =
+                        document.createElement("a");
+
+                    card.className =
+                        "page-card";
+
+                    card.href =
+                        item.url;
+
+
+                    /*
+                     * External URLs open in a new tab.
+                     * rdir links remain on your site.
+                     */
+
+                    if (
+                        /^https?:\/\//i.test(
+                            item.url
+                        )
+                    ) {
+
+                        card.target =
+                            "_blank";
+
+                        card.rel =
+                            "noopener noreferrer";
+
+                    }
+
+
+                    card.innerHTML = `
+
+                        <div class="page-card-content">
+
+                            <div class="page-card-title">
+                                ${escapeHTML(item.name)}
+                            </div>
+
+                        </div>
+
+                        <div class="page-card-arrow">
+                            →
+                        </div>
+
+                    `;
+
+
+                    grid.appendChild(card);
+
+                });
+
+
+                group.appendChild(title);
+
+                group.appendChild(grid);
+
+                pagesContainer.appendChild(group);
+
+            }
+        );
+
+    }
 
 
     /* ==================================================
