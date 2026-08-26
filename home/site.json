@@ -77,75 +77,75 @@
         "Media": [
             {
                 "name": "Music Player",
-                "url": "MusicPlayer/"
+                "url": "rdir?Mp41"
             },
             {
                 "name": "Christmas Countdown",
-                "url": "Christmas-countdown"
+                "url": "rdir?Cc72"
             },
             {
                 "name": "K-Pop Demon Hunters",
-                "url": "k-pop-demon-hunters"
+                "url": "rdir?Kd83"
             },
             {
                 "name": "DVD ScreenSaver",
-                "url": "DVD"
+                "url": "rdir?Dv94"
             },
             {
                 "name": "Music Looper (Old)",
-                "url": "MusicLoop"
+                "url": "rdir?Ml25"
             },
             {
                 "name": "DualTone",
-                "url": "DualTone"
+                "url": "rdir?Dt36"
             }
         ],
 
         "Games": [
             {
                 "name": "Nova RNG (Broken)",
-                "url": "NovaRNG"
+                "url": "rdir?Nr47"
             },
             {
                 "name": "Mind Breaker",
-                "url": "Mind-Breaker"
+                "url": "rdir?Mb58"
             }
         ],
 
         "Source Scripts": [
             {
                 "name": "Samson Recipes (Source)",
-                "url": "https://github.com/nova-labs-code/samson-recipes"
+                "url": "rdir?Ss69"
             }
         ],
 
         "Utilities": [
             {
                 "name": "Checklist",
-                "url": "checklist"
+                "url": "rdir?Cl71"
             },
             {
                 "name": "Block Tools",
-                "url": "BlockTools"
+                "url": "rdir?Bt82"
             },
             {
                 "name": "QR Code Generator",
-                "url": "QRcode"
+                "url": "rdir?Qr93"
             }
         ],
 
         "Courses": [
             {
                 "name": "Kitchen Alchemy",
-                "url": "KitchenAlchemy"
+                "url": "rdir?Ka14"
             },
             {
                 "name": "20 Week Coding Course",
-                "url": "20-week-coding-course"
+                "url": "rdir?Wc25"
             },
             {
                 "name": "KnowledgePath",
-                "url": "KnowledgePath"
+                "url": "rdir?Kp36"
             }
         ]
     },
