@@ -2,13 +2,17 @@ async function loadSite() {
 
     try {
 
-        const response = await fetch("site.json");
+        const response =
+            await fetch("site.json");
 
         if (!response.ok) {
-            throw new Error("Could not load site.json");
+            throw new Error(
+                "Could not load site.json"
+            );
         }
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         buildSite(data);
 
@@ -29,9 +33,16 @@ async function loadSite() {
                 padding:30px;
             ">
                 <div>
-                    <h1>Unable to load website</h1>
-                    <p style="color:#999;margin-top:10px;">
-                        Please check that site.json is available.
+                    <h1>
+                        Unable to load website
+                    </h1>
+
+                    <p style="
+                        color:#999;
+                        margin-top:10px;
+                    ">
+                        Please check that site.json
+                        is available and valid.
                     </p>
                 </div>
             </div>
@@ -46,20 +57,28 @@ async function loadSite() {
 
 function buildSite(data) {
 
-    const studio = data.studio;
-    const hero = data.hero;
+    const studio =
+        data.studio;
+
+    const hero =
+        data.hero;
 
 
     /* ==================================================
        BASIC INFORMATION
     ================================================== */
 
-    document.title = studio.name;
-
-    document.getElementById("navLogo").textContent =
+    document.title =
         studio.name;
 
-    document.getElementById("copyright").textContent =
+    document.getElementById(
+        "navLogo"
+    ).textContent =
+        studio.name;
+
+    document.getElementById(
+        "copyright"
+    ).textContent =
         `© 2026 ${studio.name}. All rights reserved.`;
 
 
@@ -67,34 +86,50 @@ function buildSite(data) {
        HERO
     ================================================== */
 
-    document.getElementById("heroEyebrow").textContent =
+    document.getElementById(
+        "heroEyebrow"
+    ).textContent =
         hero.eyebrow;
 
+
     const heroTitle =
-        document.getElementById("heroTitle");
+        document.getElementById(
+            "heroTitle"
+        );
 
     heroTitle.innerHTML = "";
+
 
     hero.title.forEach(line => {
 
         const span =
-            document.createElement("span");
+            document.createElement(
+                "span"
+            );
 
-        span.textContent = line;
+        span.textContent =
+            line;
 
-        span.style.display = "block";
+        span.style.display =
+            "block";
 
-        heroTitle.appendChild(span);
+        heroTitle.appendChild(
+            span
+        );
 
     });
 
 
-    document.getElementById("heroDescription")
-        .textContent = hero.description;
+    document.getElementById(
+        "heroDescription"
+    ).textContent =
+        hero.description;
 
 
     const primary =
-        document.getElementById("heroPrimary");
+        document.getElementById(
+            "heroPrimary"
+        );
 
     primary.textContent =
         hero.primaryButton.text;
@@ -104,7 +139,9 @@ function buildSite(data) {
 
 
     const secondary =
-        document.getElementById("heroSecondary");
+        document.getElementById(
+            "heroSecondary"
+        );
 
     secondary.textContent =
         hero.secondaryButton.text;
@@ -118,66 +155,81 @@ function buildSite(data) {
     ================================================== */
 
     const gamesGrid =
-        document.getElementById("gamesGrid");
+        document.getElementById(
+            "gamesGrid"
+        );
 
     gamesGrid.innerHTML = "";
 
-    data.games.forEach(game => {
 
-        const card =
-            document.createElement("article");
+    if (Array.isArray(data.games)) {
 
-        card.className = "game-card";
+        data.games.forEach(game => {
 
-        card.innerHTML = `
+            const card =
+                document.createElement(
+                    "article"
+                );
 
-            <div class="game-image">
+            card.className =
+                "game-card";
 
-                ${
-                    game.image
-                    ? `<img
+
+            const imageHTML =
+                game.image
+                ? `
+                    <img
                         src="${escapeHTML(game.image)}"
                         alt="${escapeHTML(game.name)}"
                         loading="lazy"
-                    >`
-                    : "GAME IMAGE"
-                }
+                    >
+                `
+                : "GAME IMAGE";
 
-            </div>
 
-            <div class="game-info">
+            card.innerHTML = `
 
-                <h3>
-                    ${escapeHTML(game.name)}
-                </h3>
+                <div class="game-image">
+                    ${imageHTML}
+                </div>
 
-                <p>
-                    ${escapeHTML(game.description)}
-                </p>
+                <div class="game-info">
 
-                <div class="platforms">
+                    <h3>
+                        ${escapeHTML(game.name)}
+                    </h3>
 
-                    <span class="platform">
-                        ${escapeHTML(game.platform)}
-                    </span>
+                    <p>
+                        ${escapeHTML(game.description)}
+                    </p>
+
+                    <div class="platforms">
+
+                        <span class="platform">
+                            ${escapeHTML(game.platform)}
+                        </span>
+
+                    </div>
+
+                    <a
+                        href="${escapeHTML(game.link)}"
+                        class="button primary"
+                    >
+                        Play on Roblox
+                    </a>
 
                 </div>
 
-                <a
-                    href="${escapeHTML(game.link)}"
-                    class="button primary"
-                    target="_blank"
-                    rel="noopener"
-                >
-                    Play on Roblox
-                </a>
+            `;
 
-            </div>
-        `;
 
-        gamesGrid.appendChild(card);
+            gamesGrid.appendChild(
+                card
+            );
 
-    });
+        });
+
+    }
 
 
     /* ==================================================
@@ -185,70 +237,87 @@ function buildSite(data) {
     ================================================== */
 
     const modelsGrid =
-        document.getElementById("modelsGrid");
+        document.getElementById(
+            "modelsGrid"
+        );
 
     modelsGrid.innerHTML = "";
 
-    data.models.forEach(model => {
 
-        const card =
-            document.createElement("article");
+    if (Array.isArray(data.models)) {
 
-        card.className = "model-card";
+        data.models.forEach(model => {
 
-        card.innerHTML = `
+            const card =
+                document.createElement(
+                    "article"
+                );
 
-            <div class="model-preview">
+            card.className =
+                "model-card";
 
-                ${
-                    model.image
-                    ? `<img
+
+            const imageHTML =
+                model.image
+                ? `
+                    <img
                         src="${escapeHTML(model.image)}"
                         alt="${escapeHTML(model.name)}"
                         loading="lazy"
-                    >`
-                    : "MODEL PREVIEW"
-                }
+                    >
+                `
+                : "MODEL PREVIEW";
 
-            </div>
 
-            <div class="model-info">
+            card.innerHTML = `
 
-                <h3>
-                    ${escapeHTML(model.name)}
-                </h3>
+                <div class="model-preview">
+                    ${imageHTML}
+                </div>
 
-                <p>
-                    ${escapeHTML(model.description)}
-                </p>
+                <div class="model-info">
 
-                <div class="model-meta">
+                    <h3>
+                        ${escapeHTML(model.name)}
+                    </h3>
 
-                    <span class="model-type">
-                        ${escapeHTML(model.platform)}
-                    </span>
+                    <p>
+                        ${escapeHTML(model.description)}
+                    </p>
 
-                    <span class="free">
-                        ${escapeHTML(model.type)}
-                    </span>
+                    <div class="model-meta">
+
+                        <span class="model-type">
+                            ${escapeHTML(model.platform)}
+                        </span>
+
+                        <span class="free">
+                            ${escapeHTML(model.type)}
+                        </span>
+
+                    </div>
+
+                    <a
+                        href="${escapeHTML(model.link)}"
+                        class="button primary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Get Model
+                    </a>
 
                 </div>
 
-                <a
-                    href="${escapeHTML(model.link)}"
-                    class="button primary"
-                    target="_blank"
-                    rel="noopener"
-                >
-                    Get Model
-                </a>
+            `;
 
-            </div>
-        `;
 
-        modelsGrid.appendChild(card);
+            modelsGrid.appendChild(
+                card
+            );
 
-    });
+        });
+
+    }
 
 
     /* ==================================================
@@ -256,61 +325,77 @@ function buildSite(data) {
     ================================================== */
 
     const storeGrid =
-        document.getElementById("storeGrid");
+        document.getElementById(
+            "storeGrid"
+        );
 
     storeGrid.innerHTML = "";
 
-    data.store.forEach(item => {
 
-        const card =
-            document.createElement("article");
+    if (Array.isArray(data.store)) {
 
-        card.className = "store-item";
+        data.store.forEach(item => {
 
-        card.innerHTML = `
+            const card =
+                document.createElement(
+                    "article"
+                );
 
-            <div class="store-image">
+            card.className =
+                "store-item";
 
-                ${
-                    item.image
-                    ? `<img
+
+            const imageHTML =
+                item.image
+                ? `
+                    <img
                         src="${escapeHTML(item.image)}"
                         alt="${escapeHTML(item.name)}"
                         loading="lazy"
-                    >`
-                    : "PRODUCT IMAGE"
-                }
+                    >
+                `
+                : "PRODUCT IMAGE";
 
-            </div>
 
-            <h3>
-                ${escapeHTML(item.name)}
-            </h3>
+            card.innerHTML = `
 
-            <p>
-                ${escapeHTML(item.description)}
-            </p>
+                <div class="store-image">
+                    ${imageHTML}
+                </div>
 
-            <div class="store-status">
-                ${escapeHTML(item.type)}
-            </div>
+                <h3>
+                    ${escapeHTML(item.name)}
+                </h3>
 
-            <br>
+                <p>
+                    ${escapeHTML(item.description)}
+                </p>
 
-            <a
-                href="${escapeHTML(item.link)}"
-                class="button primary"
-                target="_blank"
-                rel="noopener"
-            >
-                Get It
-            </a>
+                <div class="store-status">
+                    ${escapeHTML(item.type)}
+                </div>
 
-        `;
+                <br>
 
-        storeGrid.appendChild(card);
+                <a
+                    href="${escapeHTML(item.link)}"
+                    class="button primary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Get It
+                </a>
 
-    });
+            `;
+
+
+            storeGrid.appendChild(
+                card
+            );
+
+        });
+
+    }
 
 
     /* ==================================================
@@ -318,84 +403,152 @@ function buildSite(data) {
     ================================================== */
 
     const pagesContainer =
-        document.getElementById("pagesContainer");
+        document.getElementById(
+            "pagesContainer"
+        );
 
     pagesContainer.innerHTML = "";
 
-    if (data.pages && typeof data.pages === "object") {
 
-        Object.keys(data.pages).forEach(category => {
+    if (
+        data.pages &&
+        typeof data.pages === "object"
+    ) {
 
-            const section =
-                document.createElement("div");
+        Object.entries(
+            data.pages
+        ).forEach(
+            ([category, pages]) => {
 
-            section.className = "page-category";
-
-
-            /* CATEGORY TITLE */
-
-            const title =
-                document.createElement("h3");
-
-            title.className = "page-category-title";
-
-            title.textContent = category;
-
-
-            /* PAGE GRID */
-
-            const grid =
-                document.createElement("div");
-
-            grid.className = "pages-grid";
-
-
-            /* PAGE CARDS */
-
-            data.pages[category].forEach(page => {
-
-                const card =
-                    document.createElement("a");
-
-                card.className = "page-card";
-
-                card.href = page.url;
-
-
-                /*
-                    External URLs open in a new tab.
-                    rdir links remain normal links.
-                */
-
-                if (/^https?:\/\//i.test(page.url)) {
-
-                    card.target = "_blank";
-
-                    card.rel =
-                        "noopener noreferrer";
+                if (
+                    !Array.isArray(pages) ||
+                    pages.length === 0
+                ) {
+                    return;
                 }
 
 
-                card.innerHTML = `
+                /* CATEGORY */
 
-                    <div class="page-card-title">
-                        ${escapeHTML(page.name)}
-                    </div>
+                const categoryElement =
+                    document.createElement(
+                        "div"
+                    );
 
-                `;
-
-                grid.appendChild(card);
-
-            });
+                categoryElement.className =
+                    "page-category";
 
 
-            section.appendChild(title);
+                /* CATEGORY TITLE */
 
-            section.appendChild(grid);
+                const title =
+                    document.createElement(
+                        "h3"
+                    );
 
-            pagesContainer.appendChild(section);
+                title.className =
+                    "page-category-title";
 
-        });
+                title.textContent =
+                    category;
+
+
+                /* GRID */
+
+                const grid =
+                    document.createElement(
+                        "div"
+                    );
+
+                grid.className =
+                    "pages-grid";
+
+
+                /* PAGE CARDS */
+
+                pages.forEach(page => {
+
+                    if (
+                        !page ||
+                        !page.name ||
+                        !page.url
+                    ) {
+                        return;
+                    }
+
+
+                    const card =
+                        document.createElement(
+                            "a"
+                        );
+
+                    card.className =
+                        "page-card";
+
+                    card.href =
+                        page.url;
+
+
+                    /*
+                        Only real external URLs
+                        open in a new tab.
+
+                        rdir?CODE stays in the
+                        current tab.
+                    */
+
+                    if (
+                        /^https?:\/\//i.test(
+                            page.url
+                        )
+                    ) {
+
+                        card.target =
+                            "_blank";
+
+                        card.rel =
+                            "noopener noreferrer";
+
+                    }
+
+
+                    const cardTitle =
+                        document.createElement(
+                            "div"
+                        );
+
+                    cardTitle.className =
+                        "page-card-title";
+
+                    cardTitle.textContent =
+                        page.name;
+
+
+                    card.appendChild(
+                        cardTitle
+                    );
+
+                    grid.appendChild(
+                        card
+                    );
+
+                });
+
+
+                categoryElement.appendChild(
+                    title
+                );
+
+                categoryElement.appendChild(
+                    grid
+                );
+
+                pagesContainer.appendChild(
+                    categoryElement
+                );
+
+            }
+        );
 
     }
 
@@ -405,36 +558,50 @@ function buildSite(data) {
     ================================================== */
 
     const updatesContainer =
-        document.getElementById("updatesContainer");
+        document.getElementById(
+            "updatesContainer"
+        );
 
     updatesContainer.innerHTML = "";
 
-    data.updates.forEach(update => {
 
-        const box =
-            document.createElement("div");
+    if (Array.isArray(data.updates)) {
 
-        box.className = "update-box";
+        data.updates.forEach(update => {
 
-        box.innerHTML = `
+            const box =
+                document.createElement(
+                    "div"
+                );
 
-            <div class="update-date">
-                ${escapeHTML(update.date)}
-            </div>
+            box.className =
+                "update-box";
 
-            <h3>
-                ${escapeHTML(update.title)}
-            </h3>
 
-            <p>
-                ${escapeHTML(update.description)}
-            </p>
+            box.innerHTML = `
 
-        `;
+                <div class="update-date">
+                    ${escapeHTML(update.date)}
+                </div>
 
-        updatesContainer.appendChild(box);
+                <h3>
+                    ${escapeHTML(update.title)}
+                </h3>
 
-    });
+                <p>
+                    ${escapeHTML(update.description)}
+                </p>
+
+            `;
+
+
+            updatesContainer.appendChild(
+                box
+            );
+
+        });
+
+    }
 
 
     /* ==================================================
@@ -442,47 +609,137 @@ function buildSite(data) {
     ================================================== */
 
     const faqContainer =
-        document.getElementById("faqContainer");
+        document.getElementById(
+            "faqContainer"
+        );
 
     faqContainer.innerHTML = "";
 
-    data.faq.forEach(item => {
 
-        const details =
-            document.createElement("details");
+    if (Array.isArray(data.faq)) {
 
-        details.innerHTML = `
+        data.faq.forEach(item => {
 
-            <summary>
-                ${escapeHTML(item.question)}
-            </summary>
+            const details =
+                document.createElement(
+                    "details"
+                );
 
-            <p>
-                ${escapeHTML(item.answer)}
-            </p>
 
-        `;
+            const summary =
+                document.createElement(
+                    "summary"
+                );
 
-        faqContainer.appendChild(details);
+            summary.textContent =
+                item.question;
 
-    });
+
+            const answer =
+                document.createElement(
+                    "p"
+                );
+
+            answer.textContent =
+                item.answer;
+
+
+            details.appendChild(
+                summary
+            );
+
+            details.appendChild(
+                answer
+            );
+
+            faqContainer.appendChild(
+                details
+            );
+
+        });
+
+    }
 
 
     /* ==================================================
        PLATFORM LINKS
     ================================================== */
 
-    document.getElementById("robloxLink").href =
-        studio.roblox;
+    setLink(
+        "robloxLink",
+        studio.roblox
+    );
 
-    document.getElementById("youtubeLink").href =
-        studio.youtube;
+    setLink(
+        "youtubeLink",
+        studio.youtube
+    );
 
-    document.getElementById("footerRoblox").href =
-        studio.roblox;
+    setLink(
+        "footerRoblox",
+        studio.roblox
+    );
 
-    document.getElementById("footerYoutube").href =
-        studio.youtube;
+    setLink(
+        "footerYoutube",
+        studio.youtube
+    );
+
+}
+
+
+/* ==================================================
+   LINK HELPER
+================================================== */
+
+function setLink(
+    elementId,
+    url
+) {
+
+    const element =
+        document.getElementById(
+            elementId
+        );
+
+    if (!element || !url) {
+        return;
+    }
+
+
+    element.href =
+        url;
+
+
+    /*
+        rdir?CODE links stay in the
+        current tab.
+
+        Actual external URLs open
+        in a new tab.
+    */
+
+    if (
+        /^https?:\/\//i.test(url)
+    ) {
+
+        element.target =
+            "_blank";
+
+        element.rel =
+            "noopener noreferrer";
+
+    } else {
+
+        element.removeAttribute(
+            "target"
+        );
+
+        element.removeAttribute(
+            "rel"
+        );
+
+    }
 
 }
 
@@ -494,12 +751,15 @@ function buildSite(data) {
 function escapeHTML(value) {
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     div.textContent =
         value ?? "";
 
     return div.innerHTML;
+
 }
 
 
